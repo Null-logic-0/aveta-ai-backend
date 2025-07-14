@@ -1,4 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { SignUpProvider } from './providers/sign-up.provider';
+import { SignUpDto } from './dtos/sign-up.dto';
+import { SignInDto } from './dtos/sign-in.dto';
+import { SignInProvider } from './providers/sign-in.provider';
+import { SignOutProvider } from './providers/sign-out.provider';
 
 @Injectable()
-export class AuthService {}
+export class AuthService {
+  constructor(
+    private readonly signUpProvider: SignUpProvider,
+
+    private readonly signInProvider: SignInProvider,
+
+    private readonly signOutProvider: SignOutProvider,
+  ) {}
+
+  async signUp(signUpDto: SignUpDto) {
+    return this.signUpProvider.signup(signUpDto);
+  }
+
+  async signIn(signIn: SignInDto) {
+    return this.signInProvider.singIn(signIn);
+  }
+
+  async signOut(userId: number) {
+    return this.signOutProvider.signOut(userId);
+  }
+}

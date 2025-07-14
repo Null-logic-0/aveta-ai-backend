@@ -8,6 +8,15 @@ import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import enviromentValidation from './config/enviroment.validation';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SubscriptionService } from './subscription/subscription.service';
+import { SubscriptionModule } from './subscription/subscription.module';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { DataResponseInterceptor } from './common/interceptors/data-response/data-response.interceptor';
+import { JwtModule } from '@nestjs/jwt';
+import jwtConfig from './auth/config/jwt.config';
+import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard';
+import { AuthenticationGuard } from './auth/guards/authentication/authentication.guard';
+import { RolesGuard } from './auth/guards/authentication/roles.guard';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -36,10 +45,29 @@ const ENV = process.env.NODE_ENV || 'development';
         ),
       }),
     }),
+    ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync(jwtConfig.asProvider()),
     UsersModule,
     AuthModule,
+    SubscriptionModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    SubscriptionService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthenticationGuard,
+    },
+    AccessTokenGuard,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: DataResponseInterceptor,
+    },
+  ],
 })
 export class AppModule {}
