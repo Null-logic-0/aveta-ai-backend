@@ -12,6 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
 import jwtConfig from './config/jwt.config';
 import { SignInProvider } from './providers/sign-in.provider';
 import { SignOutProvider } from './providers/sign-out.provider';
+import { UpdatePassword } from './providers/update-password.provider';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { SignOutProvider } from './providers/sign-out.provider';
       useClass: BcryptProvider,
     },
     GenerateTokensProvider,
+    UpdatePassword,
   ],
   exports: [AuthService, HashingProvider],
 })

@@ -38,7 +38,7 @@ export class SignInProvider {
 
     if (user.isBlocked) {
       throw new UnauthorizedException(
-        'Your account has been blocked.Contact support.',
+        'Your account has been blocked by admin.Please,contact support.',
       );
     }
 

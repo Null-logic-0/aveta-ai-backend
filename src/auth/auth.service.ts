@@ -4,6 +4,8 @@ import { SignUpDto } from './dtos/sign-up.dto';
 import { SignInDto } from './dtos/sign-in.dto';
 import { SignInProvider } from './providers/sign-in.provider';
 import { SignOutProvider } from './providers/sign-out.provider';
+import { UpdatePassword } from './providers/update-password.provider';
+import { UpdatePasswordDto } from './dtos/update-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -13,6 +15,8 @@ export class AuthService {
     private readonly signInProvider: SignInProvider,
 
     private readonly signOutProvider: SignOutProvider,
+
+    private readonly updatePasswordProvider: UpdatePassword,
   ) {}
 
   async signUp(signUpDto: SignUpDto) {
@@ -25,5 +29,12 @@ export class AuthService {
 
   async signOut(userId: number) {
     return this.signOutProvider.signOut(userId);
+  }
+
+  async updatePassword(userId: number, updatePasswordDto: UpdatePasswordDto) {
+    return this.updatePasswordProvider.updatePassword(
+      userId,
+      updatePasswordDto,
+    );
   }
 }
