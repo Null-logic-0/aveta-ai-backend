@@ -1,4 +1,11 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dtos/sign-up.dto';
 import { ApiOperation } from '@nestjs/swagger';
@@ -7,6 +14,7 @@ import { Auth } from './decorators/auth.decorator';
 import { AuthType } from './enums/auth-type.enum';
 import { GetActiveUser } from './decorators/getActiveUser';
 import { ActiveUserData } from './interface/active-user.interface';
+import { UpdatePasswordDto } from './dtos/update-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -40,5 +48,18 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async signOut(@GetActiveUser() user: ActiveUserData) {
     return this.authService.signOut(user.sub);
+  }
+
+  @Patch('update-password')
+  @Auth(AuthType.Bearer)
+  @ApiOperation({
+    summary: 'Update current logged-in user password!',
+  })
+  @HttpCode(HttpStatus.OK)
+  async updatePassword(
+    @GetActiveUser() user: ActiveUserData,
+    @Body() updatePasswordDto: UpdatePasswordDto,
+  ) {
+    return this.authService.updatePassword(user.sub, updatePasswordDto);
   }
 }

@@ -17,6 +17,7 @@ import jwtConfig from './auth/config/jwt.config';
 import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard';
 import { AuthenticationGuard } from './auth/guards/authentication/authentication.guard';
 import { RolesGuard } from './auth/guards/authentication/roles.guard';
+import { S3Module } from './uploads/s3.module';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -50,6 +51,7 @@ const ENV = process.env.NODE_ENV || 'development';
     UsersModule,
     AuthModule,
     SubscriptionModule,
+    S3Module,
   ],
   controllers: [AppController],
   providers: [
