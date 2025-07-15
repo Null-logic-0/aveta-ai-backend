@@ -1,5 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { FindByEmailProvider } from './providers/find-by-email-provider';
@@ -12,12 +16,32 @@ export class UsersService {
     private readonly findOneByEmailProvider: FindByEmailProvider,
   ) {}
 
-  getAll() {
-    return this.usersRepository.find();
+  getAll(currentUserId: number) {
+    try {
+      return this.usersRepository.find({
+        where: { id: Not(currentUserId) },
+        order: {
+          updatedAt: 'DESC',
+        },
+      });
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 
-  getOne(id: number) {
-    return this.usersRepository.findOneBy({ id });
+  async getOne(id: number) {
+    try {
+      const user = await this.usersRepository.findOneBy({ id });
+      if (!user) {
+        throw new NotFoundException('User not found with this ID!');
+      }
+      return user;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException(error);
+    }
   }
 
   findOneByEmail(email: string) {
