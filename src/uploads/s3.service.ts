@@ -51,10 +51,11 @@ export class S3Service {
       .promise();
   }
 
-  async uploadProfileImage(
+  async uploadSingleImage(
+    folder: string,
     file: Express.Multer.File,
     userId: number,
   ): Promise<string> {
-    return this.UploadFileToS3('profile-images', file, userId);
+    return this.UploadFileToS3(folder, file, userId);
   }
 }
