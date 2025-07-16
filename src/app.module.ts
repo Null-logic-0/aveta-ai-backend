@@ -19,6 +19,7 @@ import { AuthenticationGuard } from './auth/guards/authentication/authentication
 import { RolesGuard } from './auth/guards/authentication/roles.guard';
 import { S3Module } from './uploads/s3.module';
 import { MailModule } from './mail/mail.module';
+import { BlogsModule } from './blogs/blogs.module';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -54,6 +55,7 @@ const ENV = process.env.NODE_ENV || 'development';
     SubscriptionModule,
     S3Module,
     MailModule,
+    BlogsModule,
   ],
   controllers: [AppController],
   providers: [

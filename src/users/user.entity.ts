@@ -5,9 +5,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Blog } from 'src/blogs/blogs.entity';
 
 @Entity()
 export class User {
@@ -70,6 +72,9 @@ export class User {
     default: false,
   })
   isPaid: boolean;
+
+  @OneToMany(() => Blog, (blogList) => blogList.creator)
+  blogs?: Blog[];
 
   characters?: [];
 

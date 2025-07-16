@@ -8,6 +8,7 @@ import { S3Service } from '../../uploads/s3.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user.entity';
 import { Repository } from 'typeorm';
+import { extractS3KeyFromUrl } from 'src/uploads/utils/extractS3KeyFromUrl';
 
 @Injectable()
 export class UpdateUser {
@@ -17,14 +18,14 @@ export class UpdateUser {
     private readonly s3Service: S3Service,
   ) {}
 
-  private extractS3KeyFromUrl(url: string): string | null {
-    try {
-      const parsed = new URL(url);
-      return decodeURIComponent(parsed.pathname.slice(1));
-    } catch {
-      return null;
-    }
-  }
+  // private extractS3KeyFromUrl(url: string): string | null {
+  //   try {
+  //     const parsed = new URL(url);
+  //     return decodeURIComponent(parsed.pathname.slice(1));
+  //   } catch {
+  //     return null;
+  //   }
+  // }
 
   async update(
     userId: number,
@@ -47,11 +48,15 @@ export class UpdateUser {
       }
       if (file) {
         if (user.profileImage) {
-          const key = this.extractS3KeyFromUrl(user.profileImage);
+          const key = extractS3KeyFromUrl(user.profileImage);
           if (key) await this.s3Service.deleteObject(key);
         }
 
-        const imageUrl = await this.s3Service.uploadProfileImage(file, userId);
+        const imageUrl = await this.s3Service.uploadSingleImage(
+          'profile-images',
+          file,
+          userId,
+        );
         attrs.profileImage = imageUrl;
       }
 
