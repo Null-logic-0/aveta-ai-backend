@@ -18,6 +18,7 @@ import { AccessTokenGuard } from './auth/guards/access-token/access-token.guard'
 import { AuthenticationGuard } from './auth/guards/authentication/authentication.guard';
 import { RolesGuard } from './auth/guards/authentication/roles.guard';
 import { S3Module } from './uploads/s3.module';
+import { MailModule } from './mail/mail.module';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -52,6 +53,7 @@ const ENV = process.env.NODE_ENV || 'development';
     AuthModule,
     SubscriptionModule,
     S3Module,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [

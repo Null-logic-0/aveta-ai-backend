@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dtos/sign-up.dto';
@@ -15,6 +16,8 @@ import { AuthType } from './enums/auth-type.enum';
 import { GetActiveUser } from './decorators/getActiveUser';
 import { ActiveUserData } from './interface/active-user.interface';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
+import { ForgotPasswordDto } from './dtos/forgot-password.dto';
+import { ResetPasswordDto } from './dtos/reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -61,5 +64,28 @@ export class AuthController {
     @Body() updatePasswordDto: UpdatePasswordDto,
   ) {
     return this.authService.updatePassword(user.sub, updatePasswordDto);
+  }
+
+  @Post('forgot-password')
+  @Auth(AuthType.None)
+  @ApiOperation({
+    summary: 'Forgot password!',
+  })
+  @HttpCode(HttpStatus.OK)
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(forgotPasswordDto);
+  }
+
+  @Post('reset-password')
+  @Auth(AuthType.None)
+  @ApiOperation({
+    summary: 'Reset password!',
+  })
+  @HttpCode(HttpStatus.OK)
+  async resetPassword(
+    @Body() resetPasswordDto: ResetPasswordDto,
+    @Query('token') token: string,
+  ) {
+    return this.authService.resetPassword(resetPasswordDto, token);
   }
 }

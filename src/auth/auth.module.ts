@@ -13,6 +13,8 @@ import jwtConfig from './config/jwt.config';
 import { SignInProvider } from './providers/sign-in.provider';
 import { SignOutProvider } from './providers/sign-out.provider';
 import { UpdatePassword } from './providers/update-password.provider';
+import { ForgotPasswordProvider } from './providers/forgot-password.provider';
+import { ResetPasswordProvider } from './providers/reset-password.provider';
 
 @Module({
   imports: [
@@ -32,6 +34,8 @@ import { UpdatePassword } from './providers/update-password.provider';
     },
     GenerateTokensProvider,
     UpdatePassword,
+    ForgotPasswordProvider,
+    ResetPasswordProvider,
   ],
   exports: [AuthService, HashingProvider],
 })

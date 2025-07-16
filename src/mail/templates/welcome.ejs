@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Welcome to Aveta AI</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9fafb;
+        color: #111827;
+        padding: 20px;
+      }
+      .container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 24px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      }
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #7f56d9;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        margin-top: 20px;
+      }
+      .footer {
+        margin-top: 40px;
+        font-size: 12px;
+        color: #6b7280;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Welcome to Aveta, <%= name %>!</h2>
+      <p>
+        We're excited to have you on board. Aveta AI is here to help you, create
+        your own desire characters and chat with them.
+      </p>
+      <p>You can log in to your account anytime using the button below:</p>
+      <a href="<%= homeUrl %>" class="btn">Go to Aveta</a>
+
+      <p style="margin-top: 24px">
+        If you have any questions, feel free to reply to this email — we're
+        always happy to help.
+      </p>
+      <p>With appreciation,<br />— The Aveta Team</p>
+
+      <div class="footer">
+        <p>
+          This email was sent to <%= email %>. If this wasn't you, please ignore
+          it.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
