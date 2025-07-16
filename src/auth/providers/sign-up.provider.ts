@@ -11,6 +11,7 @@ import { SignUpDto } from '../dtos/sign-up.dto';
 import { Role } from '../enums/role.enum';
 import { HashingProvider } from './hashing.provider';
 import { GenerateTokensProvider } from './generate-tokens.provider';
+import { MailService } from 'src/mail/providers/mail.service';
 
 @Injectable()
 export class SignUpProvider {
@@ -21,6 +22,8 @@ export class SignUpProvider {
     private readonly hashingPasswordProvider: HashingProvider,
 
     private readonly generateTokensProvider: GenerateTokensProvider,
+
+    private readonly mailService: MailService,
   ) {}
 
   async signup(signUpDto: SignUpDto) {
@@ -42,6 +45,8 @@ export class SignUpProvider {
 
       newUser = await this.usersRepository.save(newUser);
       const tokens = await this.generateTokensProvider.generateToken(newUser);
+      await this.mailService.sendUserWelcome(newUser);
+
       return {
         tokens,
         newUser,
