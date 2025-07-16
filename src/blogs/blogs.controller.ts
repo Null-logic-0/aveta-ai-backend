@@ -28,7 +28,7 @@ export class BlogsController {
   @Get()
   @Auth(AuthType.None)
   @ApiOperation({
-    description: 'Fetch all blogs.',
+    summary: 'Fetch all blogs.',
   })
   async getAllBlogs() {
     return this.blogsService.getAllBlogs();
@@ -37,7 +37,7 @@ export class BlogsController {
   @Get('/:blogId')
   @Auth(AuthType.None)
   @ApiOperation({
-    description: 'Fetch single blog.',
+    summary: 'Fetch single blog.',
   })
   async getSingleBlog(@Param('blogId') blogId: number) {
     return this.blogsService.getSingleBlog(blogId);
@@ -48,7 +48,7 @@ export class BlogsController {
   @Roles(Role.Admin || Role.Creator)
   @UseInterceptors(FileInterceptor('media'))
   @ApiOperation({
-    description: 'Blog creation allowed for Admins and Content Creators.',
+    summary: 'Blog creation allowed for Admins and Content Creators.',
   })
   async createBlog(
     @GetActiveUser() user: ActiveUserData,
@@ -63,7 +63,7 @@ export class BlogsController {
   @UseInterceptors(FileInterceptor('media'))
   @Roles(Role.Admin || Role.Creator)
   @ApiOperation({
-    description: 'Blog update allowed for Admins and Content Creators.',
+    summary: 'Blog update allowed for Admins and Content Creators.',
   })
   async updateBlog(
     @GetActiveUser() user: ActiveUserData,
@@ -78,7 +78,7 @@ export class BlogsController {
   @Auth(AuthType.Bearer)
   @Roles(Role.Admin || Role.Creator)
   @ApiOperation({
-    description: 'Blog deletion allowed for Admins and Content Creators.',
+    summary: 'Blog deletion allowed for Admins and Content Creators.',
   })
   async deleteBlog(
     @GetActiveUser() user: ActiveUserData,
