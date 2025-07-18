@@ -26,7 +26,7 @@ export class ChatController {
     summary: 'Fetch all chats!',
   })
   async getAllChat() {
-    return this.chatService.getAll();
+    return await this.chatService.getAll();
   }
 
   @Get('/:chatId')
@@ -35,7 +35,7 @@ export class ChatController {
     summary: 'Fetch single chat!',
   })
   async getChat(@Param('chatId') chatId: number) {
-    return this.chatService.getOne(chatId);
+    return await this.chatService.getOne(chatId);
   }
 
   @Post('/:characterId')
@@ -48,7 +48,7 @@ export class ChatController {
     @GetActiveUser() user: ActiveUserData,
     @Body() createChatDto: CreateChatDto,
   ) {
-    return this.chatService.create(characterId, user.sub, createChatDto);
+    return await this.chatService.create(characterId, user.sub, createChatDto);
   }
 
   @Patch('/:chatId')
@@ -61,7 +61,7 @@ export class ChatController {
     @GetActiveUser() user: ActiveUserData,
     @Body() updateChatThemeDto: UpdateChatThemeDto,
   ) {
-    return this.chatService.update(chatId, user.sub, updateChatThemeDto);
+    return await this.chatService.update(chatId, user.sub, updateChatThemeDto);
   }
 
   @Delete('/:chatId')
@@ -69,10 +69,10 @@ export class ChatController {
   @ApiOperation({
     summary: 'Delete chat!',
   })
-  deleteChat(
+  async deleteChat(
     @Param('chatId') chatId: number,
     @GetActiveUser() user: ActiveUserData,
   ) {
-    return this.chatService.delete(user.sub, chatId);
+    return await this.chatService.delete(user.sub, chatId);
   }
 }

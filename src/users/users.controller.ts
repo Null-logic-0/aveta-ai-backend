@@ -29,8 +29,8 @@ export class UsersController {
   @ApiOperation({
     summary: 'Fetch all users.',
   })
-  getAllUsers(@GetActiveUser() user: ActiveUserData) {
-    return this.usersService.getAll(user.sub);
+  async getAllUsers(@GetActiveUser() user: ActiveUserData) {
+    return await this.usersService.getAll(user.sub);
   }
 
   @Patch('update-role/:id')
@@ -38,11 +38,11 @@ export class UsersController {
   @ApiOperation({
     summary: 'Update any user role by admin.',
   })
-  updateUserRole(
+  async updateUserRole(
     @Param('id') id: number,
     @Body() updateUserRole: UpdateUserRoleDto,
   ) {
-    return this.usersService.updateUserRole(id, updateUserRole);
+    return await this.usersService.updateUserRole(id, updateUserRole);
   }
 
   @Patch('toggleBlock-user/:id')
@@ -50,8 +50,8 @@ export class UsersController {
   @ApiOperation({
     summary: 'Block/Unblock any user by admin.',
   })
-  toggleBlockUser(@Param('id') id: number) {
-    return this.usersService.toggleBlockUser(id);
+  async toggleBlockUser(@Param('id') id: number) {
+    return await this.usersService.toggleBlockUser(id);
   }
 
   @Delete('delete-user/:id')
@@ -59,8 +59,8 @@ export class UsersController {
   @ApiOperation({
     summary: 'Delete any user by admin.',
   })
-  deleteUser(@Param('id') id: number) {
-    return this.usersService.removeUser(id);
+  async deleteUser(@Param('id') id: number) {
+    return await this.usersService.removeUser(id);
   }
 
   // Current logged-in user routes
@@ -70,15 +70,15 @@ export class UsersController {
     summary: 'Fetch current logged-in user profile.',
   })
   async getCurrentUser(@GetActiveUser() user: ActiveUserData) {
-    return this.usersService.getOne(user.sub);
+    return await this.usersService.getOne(user.sub);
   }
 
   @Get('user/:id')
   @ApiOperation({
     summary: 'Fetch single user.',
   })
-  getSingleUser(@Param('id') id: number) {
-    return this.usersService.getOne(id);
+  async getSingleUser(@Param('id') id: number) {
+    return await this.usersService.getOne(id);
   }
 
   @Patch('/me/update-profile')
@@ -91,7 +91,7 @@ export class UsersController {
     @Body() updateUserProfileDto: UpdateUserProfileDto,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.usersService.updateProfile(
+    return await this.usersService.updateProfile(
       user.sub,
       updateUserProfileDto,
       file,
@@ -103,6 +103,6 @@ export class UsersController {
     summary: 'Delete account!',
   })
   async deleteAccount(@GetActiveUser() user: ActiveUserData) {
-    return this.usersService.deleteAccount(user.sub);
+    return await this.usersService.deleteAccount(user.sub);
   }
 }

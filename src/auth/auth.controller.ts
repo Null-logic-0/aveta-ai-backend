@@ -30,7 +30,7 @@ export class AuthController {
   })
   @HttpCode(HttpStatus.OK)
   async signUp(@Body() signUpDto: SignUpDto) {
-    return this.authService.signUp(signUpDto);
+    return await this.authService.signUp(signUpDto);
   }
 
   @Post('sign-in')
@@ -40,7 +40,7 @@ export class AuthController {
   })
   @HttpCode(HttpStatus.OK)
   async signIn(@Body() signInDto: SignInDto) {
-    return this.authService.signIn(signInDto);
+    return await this.authService.signIn(signInDto);
   }
 
   @Post('sign-out')
@@ -50,7 +50,7 @@ export class AuthController {
   })
   @HttpCode(HttpStatus.OK)
   async signOut(@GetActiveUser() user: ActiveUserData) {
-    return this.authService.signOut(user.sub);
+    return await this.authService.signOut(user.sub);
   }
 
   @Patch('update-password')
@@ -63,7 +63,7 @@ export class AuthController {
     @GetActiveUser() user: ActiveUserData,
     @Body() updatePasswordDto: UpdatePasswordDto,
   ) {
-    return this.authService.updatePassword(user.sub, updatePasswordDto);
+    return await this.authService.updatePassword(user.sub, updatePasswordDto);
   }
 
   @Post('forgot-password')
@@ -73,7 +73,7 @@ export class AuthController {
   })
   @HttpCode(HttpStatus.OK)
   async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
-    return this.authService.forgotPassword(forgotPasswordDto);
+    return await this.authService.forgotPassword(forgotPasswordDto);
   }
 
   @Post('reset-password')
@@ -86,6 +86,6 @@ export class AuthController {
     @Body() resetPasswordDto: ResetPasswordDto,
     @Query('token') token: string,
   ) {
-    return this.authService.resetPassword(resetPasswordDto, token);
+    return await this.authService.resetPassword(resetPasswordDto, token);
   }
 }

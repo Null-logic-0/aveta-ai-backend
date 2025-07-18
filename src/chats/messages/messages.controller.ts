@@ -16,8 +16,8 @@ export class MessagesController {
   @ApiOperation({
     summary: 'Fetch all messages.',
   })
-  getAllMessages(@Param('chatId') chatId: number) {
-    return this.messagesService.getAll(chatId);
+  async getAllMessages(@Param('chatId') chatId: number) {
+    return await this.messagesService.getAll(chatId);
   }
 
   @Post('/:chatId')
@@ -25,11 +25,11 @@ export class MessagesController {
   @ApiOperation({
     summary: 'Send message.',
   })
-  sendMessage(
+  async sendMessage(
     @Param('chatId') chatId: number,
     @GetActiveUser() user: ActiveUserData,
     @Body() sendMessageDto: SendMessageDto,
   ) {
-    return this.messagesService.create(user.sub, chatId, sendMessageDto);
+    return await this.messagesService.create(user.sub, chatId, sendMessageDto);
   }
 }

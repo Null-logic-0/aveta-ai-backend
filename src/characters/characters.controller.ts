@@ -29,7 +29,7 @@ export class CharactersController {
     summary: 'Fetch all characters.',
   })
   async getAllCharacters() {
-    return this.charactersService.getAll();
+    return await this.charactersService.getAll();
   }
 
   @Get('/:characterId')
@@ -38,7 +38,7 @@ export class CharactersController {
     summary: 'Fetch single character.',
   })
   async getSingleCharacter(@Param('characterId') characterId: number) {
-    return this.charactersService.getOne(characterId);
+    return await this.charactersService.getOne(characterId);
   }
 
   @Post()
@@ -52,7 +52,11 @@ export class CharactersController {
     @Body() createCharacterDto: CreateCharacterDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.charactersService.create(user.sub, createCharacterDto, file);
+    return await this.charactersService.create(
+      user.sub,
+      createCharacterDto,
+      file,
+    );
   }
 
   @Patch('/:characterId')
@@ -67,7 +71,7 @@ export class CharactersController {
     @Body() updateCharacterDto: UpdateCharacterDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.charactersService.update(
+    return await this.charactersService.update(
       characterId,
       user.sub,
       updateCharacterDto,
@@ -84,6 +88,6 @@ export class CharactersController {
     @Param('characterId') characterId: number,
     @GetActiveUser() user: ActiveUserData,
   ) {
-    return this.charactersService.delete(characterId, user.sub);
+    return await this.charactersService.delete(characterId, user.sub);
   }
 }
