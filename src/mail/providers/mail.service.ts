@@ -1,10 +1,33 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { Transporter } from 'nodemailer';
+
 import { User } from '../../users/user.entity';
 
 @Injectable()
 export class MailService {
-  constructor(private mailerService: MailerService) {}
+  private readonly logger = new Logger(MailService.name);
+
+  constructor(private mailerService: MailerService) {
+    void this.verifyTransporter();
+  }
+
+  private async verifyTransporter() {
+    try {
+      const transporter = this.mailerService['transporter'] as Transporter;
+      if (transporter && typeof transporter.verify === 'function') {
+        await transporter.verify();
+        this.logger.log('✅ Mailer transporter is ready');
+      } else {
+        this.logger.warn('⚠️ Could not access transporter for verification');
+      }
+    } catch (err) {
+      this.logger.error(
+        '❌ Mailer transporter failed to initialize',
+        err.stack,
+      );
+    }
+  }
 
   async sendUserWelcome(user: User): Promise<void> {
     try {
@@ -20,7 +43,7 @@ export class MailService {
         },
       });
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new BadRequestException(error || 'Failed to send welcome email');
     }
   }
 
@@ -37,7 +60,9 @@ export class MailService {
         },
       });
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new BadRequestException(
+        error || 'Failed to send password reset email',
+      );
     }
   }
 }

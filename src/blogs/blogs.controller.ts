@@ -31,7 +31,7 @@ export class BlogsController {
     summary: 'Fetch all blogs.',
   })
   async getAllBlogs() {
-    return this.blogsService.getAllBlogs();
+    return await this.blogsService.getAllBlogs();
   }
 
   @Get('/:blogId')
@@ -40,7 +40,7 @@ export class BlogsController {
     summary: 'Fetch single blog.',
   })
   async getSingleBlog(@Param('blogId') blogId: number) {
-    return this.blogsService.getSingleBlog(blogId);
+    return await this.blogsService.getSingleBlog(blogId);
   }
 
   @Post()
@@ -55,7 +55,7 @@ export class BlogsController {
     @Body() createBlogDto: CreateBlogDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.blogsService.createBlog(user.sub, createBlogDto, file);
+    return await this.blogsService.createBlog(user.sub, createBlogDto, file);
   }
 
   @Patch('/:blogId')
@@ -71,7 +71,12 @@ export class BlogsController {
     @Body() updateBlogDto: UpdateBlogDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.blogsService.updateBlog(blogId, user.sub, updateBlogDto, file);
+    return await this.blogsService.updateBlog(
+      blogId,
+      user.sub,
+      updateBlogDto,
+      file,
+    );
   }
 
   @Delete('/:blogId')
@@ -84,6 +89,6 @@ export class BlogsController {
     @GetActiveUser() user: ActiveUserData,
     @Param('blogId') blogId: number,
   ) {
-    return this.blogsService.removeBlog(user.sub, blogId);
+    return await this.blogsService.removeBlog(user.sub, blogId);
   }
 }

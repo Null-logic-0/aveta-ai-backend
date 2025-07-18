@@ -56,6 +56,6 @@ export class S3Service {
     file: Express.Multer.File,
     userId: number,
   ): Promise<string> {
-    return this.UploadFileToS3(folder, file, userId);
+    return await this.UploadFileToS3(folder, file, userId);
   }
 }
