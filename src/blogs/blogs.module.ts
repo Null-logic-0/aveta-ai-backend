@@ -11,7 +11,13 @@ import { DeleteBlogProvider } from './providers/delete-blog.provider';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Blog, User])],
-  providers: [BlogsService, S3Service, CreateBlogProvider, UpdateBlogProvider, DeleteBlogProvider],
+  providers: [
+    BlogsService,
+    S3Service,
+    CreateBlogProvider,
+    UpdateBlogProvider,
+    DeleteBlogProvider,
+  ],
   controllers: [BlogsController],
 })
 export class BlogsModule {}

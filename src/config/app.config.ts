@@ -21,4 +21,6 @@ export default registerAs('appConfig', () => ({
   resendUser: process.env.RESEND_USER,
   resendPassword: process.env.RESEND_PASSWORD,
   resendAPI: process.env.RESEND_API_KEY,
+
+  openAIKey: process.env.OPENAI_API_KEY,
 }));

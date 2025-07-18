@@ -48,4 +48,6 @@ export default Joi.object({
     then: Joi.required(),
     otherwise: Joi.optional(),
   }),
+
+  OPENAI_API_KEY: Joi.string().required(),
 });
