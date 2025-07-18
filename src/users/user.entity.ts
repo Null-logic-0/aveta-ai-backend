@@ -9,7 +9,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Blog } from 'src/blogs/blogs.entity';
+import { Blog } from '../blogs/blogs.entity';
+import { Character } from 'src/characters/character.entity';
+import { Chat } from '../chats/chat.entity';
 
 @Entity()
 export class User {
@@ -76,7 +78,11 @@ export class User {
   @OneToMany(() => Blog, (blogList) => blogList.creator)
   blogs?: Blog[];
 
-  characters?: [];
+  @OneToMany(() => Character, (character) => character.creator)
+  characters?: Character[];
+
+  @OneToMany(() => Chat, (chat) => chat.character)
+  chats: Chat[];
 
   likedCharacters?: [];
 
