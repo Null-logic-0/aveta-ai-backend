@@ -5,6 +5,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -76,15 +78,17 @@ export class User {
   isPaid: boolean;
 
   @OneToMany(() => Blog, (blogList) => blogList.creator)
-  blogs?: Blog[];
+  blogs: Blog[];
 
   @OneToMany(() => Character, (character) => character.creator)
-  characters?: Character[];
+  characters: Character[];
 
   @OneToMany(() => Chat, (chat) => chat.character)
   chats: Chat[];
 
-  likedCharacters?: [];
+  @ManyToMany(() => Character, (character) => character.likedByUsers)
+  @JoinTable()
+  likedCharacters: Character[];
 
   @Column({
     type: 'boolean',

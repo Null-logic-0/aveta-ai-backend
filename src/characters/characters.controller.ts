@@ -6,43 +6,45 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { CharactersService } from './characters.service';
-import { Auth } from 'src/auth/decorators/auth.decorator';
-import { AuthType } from 'src/auth/enums/auth-type.enum';
 import { ApiOperation } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { GetActiveUser } from 'src/auth/decorators/getActiveUser';
 import { ActiveUserData } from 'src/auth/interface/active-user.interface';
 import { CreateCharacterDto } from './dtos/create-character.dto';
 import { UpdateCharacterDto } from './dtos/update-character.dto';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 
 @Controller('characters')
 export class CharactersController {
   constructor(private readonly charactersService: CharactersService) {}
 
   @Get()
-  @Auth(AuthType.None)
   @ApiOperation({
     summary: 'Fetch all characters.',
   })
-  async getAllCharacters() {
-    return await this.charactersService.getAll();
+  async getAllCharacters(@Query() query: PaginationQueryDto) {
+    const { limit, page, ...filters } = query;
+
+    return await this.charactersService.getAll(filters, { limit, page });
   }
 
   @Get('/:characterId')
-  @Auth(AuthType.Bearer)
   @ApiOperation({
     summary: 'Fetch single character.',
   })
-  async getSingleCharacter(@Param('characterId') characterId: number) {
-    return await this.charactersService.getOne(characterId);
+  async getSingleCharacter(
+    @Param('characterId') characterId: number,
+    @GetActiveUser() user: ActiveUserData,
+  ) {
+    return await this.charactersService.getOne(characterId, user.sub);
   }
 
   @Post()
-  @Auth(AuthType.Bearer)
   @UseInterceptors(FileInterceptor('avatar'))
   @ApiOperation({
     summary: 'Create character.',
@@ -60,7 +62,6 @@ export class CharactersController {
   }
 
   @Patch('/:characterId')
-  @Auth(AuthType.Bearer)
   @UseInterceptors(FileInterceptor('avatar'))
   @ApiOperation({
     summary: 'Update character.',
@@ -80,7 +81,6 @@ export class CharactersController {
   }
 
   @Delete('/:characterId')
-  @Auth(AuthType.Bearer)
   @ApiOperation({
     summary: 'Delete character.',
   })

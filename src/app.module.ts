@@ -23,6 +23,7 @@ import { BlogsModule } from './blogs/blogs.module';
 import { CharactersModule } from './characters/characters.module';
 import { ChatModule } from './chats/chat.module';
 import { EntityImagesModule } from './entity-images/entity-images.module';
+import { PaginationModule } from './common/pagination/pagination.module';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -62,6 +63,7 @@ const ENV = process.env.NODE_ENV || 'development';
     CharactersModule,
     ChatModule,
     EntityImagesModule,
+    PaginationModule,
   ],
   controllers: [AppController],
   providers: [

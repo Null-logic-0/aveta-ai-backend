@@ -39,10 +39,17 @@ export class UpdateCharacterProvider {
 
       const character = await this.characterRepository.findOne({
         where: { id: characterId },
+        relations: ['creator'],
       });
 
       if (!character) {
         throw new NotFoundException('Character not found.');
+      }
+
+      if (character.creator.id !== userId) {
+        throw new UnauthorizedException(
+          'You are not authorized to update this character.',
+        );
       }
 
       if (file) {
