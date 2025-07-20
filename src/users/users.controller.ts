@@ -1,10 +1,13 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
   Param,
   Patch,
+  Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -17,6 +20,7 @@ import { ActiveUserData } from 'src/auth/interface/active-user.interface';
 import { UpdateUserRoleDto } from './dtos/update-user-role.dto';
 import { UpdateUserProfileDto } from './dtos/update-user-profile.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 
 @Controller('users')
 export class UsersController {
@@ -81,6 +85,59 @@ export class UsersController {
     return await this.usersService.getOne(id);
   }
 
+  @Get('/me/my-characters')
+  @ApiOperation({
+    summary:
+      'Fetch all characters created by the current logged-in user or another user.',
+  })
+  async getAllUserCharacters(
+    @GetActiveUser() requestUserId: ActiveUserData,
+    @Query() query: PaginationQueryDto & { targetUserId?: string },
+  ) {
+    const { limit, page, targetUserId } = query;
+    const parsedTargetUserId = targetUserId
+      ? parseInt(targetUserId, 10)
+      : requestUserId.sub;
+
+    if (isNaN(parsedTargetUserId)) {
+      throw new BadRequestException('Invalid targetUserId');
+    }
+    return await this.usersService.getAllUserCharacters(
+      requestUserId.sub,
+      {
+        limit,
+        page,
+      },
+      parsedTargetUserId,
+    );
+  }
+
+  @Get('/me/liked-characters')
+  @ApiOperation({
+    summary: 'Fetch all liked characters  by the current logged-in user.',
+  })
+  async getLikedCharactersByUser(
+    @GetActiveUser() requestUserId: ActiveUserData,
+    @Query() query: PaginationQueryDto & { targetUserId?: string },
+  ) {
+    const { limit, page, targetUserId } = query;
+    const parsedTargetUserId = targetUserId
+      ? parseInt(targetUserId, 10)
+      : requestUserId.sub;
+
+    if (isNaN(parsedTargetUserId)) {
+      throw new BadRequestException('Invalid targetUserId');
+    }
+    return await this.usersService.getLikedCharactersByUser(
+      requestUserId.sub,
+      {
+        limit,
+        page,
+      },
+      parsedTargetUserId,
+    );
+  }
+
   @Patch('/me/update-profile')
   @UseInterceptors(FileInterceptor('profileImage'))
   @ApiOperation({
@@ -96,6 +153,17 @@ export class UsersController {
       updateUserProfileDto,
       file,
     );
+  }
+
+  @Post('like-character/:characterId')
+  @ApiOperation({
+    summary: 'Like character',
+  })
+  async toggleLike(
+    @GetActiveUser() user: ActiveUserData,
+    @Param('characterId') characterId: number,
+  ) {
+    return await this.usersService.toggleLike(user.sub, characterId);
   }
 
   @Delete('/me/delete-account')

@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -11,6 +12,7 @@ import {
 } from 'typeorm';
 import { Visibility } from './enums/visibility.enum';
 import { Tags } from './enums/tags.enum';
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity()
 export class Character {
@@ -54,6 +56,15 @@ export class Character {
     default: Visibility.PUBLIC,
   })
   visibility: Visibility;
+
+  @ManyToMany(() => User, (user) => user.likedCharacters, { eager: true })
+  @Exclude()
+  likedByUsers: User[];
+
+  @Expose()
+  get likes() {
+    return this.likedByUsers?.length || 0;
+  }
 
   @ManyToOne(() => User, (user) => user.characters, { eager: true })
   creator: User;

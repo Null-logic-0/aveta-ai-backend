@@ -44,7 +44,7 @@ export class BlogsService {
 
   async getAllBlogs() {
     try {
-      return this.blogRepository.find();
+      return this.blogRepository.find({ order: { createdAt: 'DESC' } });
     } catch (error) {
       throw new BadRequestException(error || 'Oops something went wrong!');
     }

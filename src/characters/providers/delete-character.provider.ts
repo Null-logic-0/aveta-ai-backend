@@ -31,12 +31,19 @@ export class DeleteCharacterProvider {
           'Invalid credentials,Please sign-in again!',
         );
       }
-      const character = await this.characterRepository.findOneBy({
-        id: characterId,
+      const character = await this.characterRepository.findOne({
+        where: { id: characterId },
+        relations: ['creator'],
       });
 
       if (!character) {
         throw new NotFoundException('Character with this ID not found!');
+      }
+
+      if (character.creator.id !== userId) {
+        throw new UnauthorizedException(
+          'You are not authorized to update this character.',
+        );
       }
 
       if (character.avatar) {

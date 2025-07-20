@@ -11,6 +11,7 @@ import {
 import { Visibility } from '../enums/visibility.enum';
 import { Tags } from '../enums/tags.enum';
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 
 export class CreateCharacterDto {
   @ApiProperty({
@@ -63,7 +64,18 @@ export class CreateCharacterDto {
   greeting?: string;
 
   @ApiProperty({
-    example: 'comedy,fictional',
+    example: ['comedy', 'fictional'],
+    description: 'Can be a single tag or an array of tags',
+    isArray: true,
+  })
+  @Transform(({ value }: { value: unknown }) => {
+    if (typeof value === 'string') {
+      return [value];
+    }
+    if (Array.isArray(value) && value.every((v) => typeof v === 'string')) {
+      return value as string[];
+    }
+    return [];
   })
   @IsArray()
   @ArrayNotEmpty()

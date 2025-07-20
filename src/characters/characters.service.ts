@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { CreateCharacterProvider } from './providers/create-character.provider';
 import { Repository } from 'typeorm';
@@ -11,6 +12,10 @@ import { CreateCharacterDto } from './dtos/create-character.dto';
 import { UpdateCharacterProvider } from './providers/update-character.provider';
 import { UpdateCharacterDto } from './dtos/update-character.dto';
 import { DeleteCharacterProvider } from './providers/delete-character.provider';
+import { GetAllCharactersFilterDto } from './dtos/get-all-characters-filter.dto';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { Visibility } from './enums/visibility.enum';
 
 @Injectable()
 export class CharactersService {
@@ -23,6 +28,8 @@ export class CharactersService {
     private readonly updateCharacterProvider: UpdateCharacterProvider,
 
     private readonly deleteCharacterProvider: DeleteCharacterProvider,
+
+    private readonly paginationProvider: PaginationProvider,
   ) {}
 
   async create(
@@ -51,28 +58,72 @@ export class CharactersService {
     );
   }
 
-  async getAll() {
+  async getAll(
+    filters: GetAllCharactersFilterDto,
+    paginateCharacters: PaginationQueryDto,
+  ) {
     try {
-      return this.characterRepository.find();
+      const query = this.characterRepository
+        .createQueryBuilder('character')
+        .leftJoinAndSelect('character.creator', 'creator')
+        .leftJoinAndSelect('character.likedByUsers', 'likedByUsers')
+        .where('character.visibility = :visibility', {
+          visibility: Visibility.PUBLIC,
+        });
+
+      if (filters.tags?.length) {
+        query.andWhere(
+          'character.tags && ARRAY[:...tags]::character_tags_enum[]',
+          {
+            tags: filters.tags,
+          },
+        );
+      }
+
+      return await this.paginationProvider.paginateQuery(
+        {
+          limit: paginateCharacters?.limit,
+          page: paginateCharacters?.page,
+        },
+        query,
+      );
     } catch (error) {
-      throw new BadRequestException(error || 'Failed to fetch characters!');
+      throw new BadRequestException(
+        error.message || 'Failed to fetch characters!',
+      );
     }
   }
 
-  async getOne(characterId: number) {
+  async getOne(characterId: number, userId?: number) {
     try {
-      const character = await this.characterRepository.findOneBy({
-        id: characterId,
+      const character = await this.characterRepository.findOne({
+        where: { id: characterId },
+        relations: ['creator'],
       });
+
       if (!character) {
-        throw new NotFoundException('Oops...,Character not found!');
+        throw new NotFoundException('Oops... Character not found!');
+      }
+
+      if (
+        character.visibility !== Visibility.PUBLIC &&
+        character.creator.id !== userId
+      ) {
+        throw new UnauthorizedException(
+          'You are not authorized to view this private character.',
+        );
       }
       return character;
     } catch (error) {
-      if (error instanceof NotFoundException) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof UnauthorizedException
+      ) {
         throw error;
       }
-      throw new BadRequestException(error || 'Oops something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops... something went wrong!',
+      );
     }
   }
 

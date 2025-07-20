@@ -11,6 +11,10 @@ import { User } from './user.entity';
 import { FindByEmailProvider } from './providers/find-by-email-provider';
 import { Role } from '../auth/enums/role.enum';
 import { UpdateUser } from './providers/update-user.provider';
+import { ToggleLikeCharacterProvider } from './providers/toggle-like-character.provider';
+import { FetchUserCreatedCharactersProvider } from './providers/fetch-user-created-characters.provider';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { FetchUserLikedCharactersProvider } from './providers/fetch-user-liked-characters.provider';
 
 @Injectable()
 export class UsersService {
@@ -20,6 +24,12 @@ export class UsersService {
     private readonly findOneByEmailProvider: FindByEmailProvider,
 
     private readonly updateUserProfileProvider: UpdateUser,
+
+    private readonly toggleLikeCharacterProvider: ToggleLikeCharacterProvider,
+
+    private readonly fetchAllUserCreatedCharactersProvider: FetchUserCreatedCharactersProvider,
+
+    private readonly fetchUserLikedCharactersProvider: FetchUserLikedCharactersProvider,
   ) {}
 
   getAll(currentUserId: number) {
@@ -38,6 +48,7 @@ export class UsersService {
   async getOne(id: number) {
     try {
       const user = await this.usersRepository.findOneBy({ id });
+
       if (!user) {
         throw new NotFoundException('User not found with this ID!');
       }
@@ -46,7 +57,7 @@ export class UsersService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new BadRequestException(error);
+      throw new BadRequestException(error || 'Oops...something went wrong');
     }
   }
 
@@ -155,5 +166,35 @@ export class UsersService {
       }
       throw new BadRequestException(error || 'Failed to delete user');
     }
+  }
+
+  async toggleLike(userId: number, characterId: number) {
+    return await this.toggleLikeCharacterProvider.toggleLike(
+      userId,
+      characterId,
+    );
+  }
+
+  async getAllUserCharacters(
+    requestUserId: number,
+    pagination: PaginationQueryDto,
+    targetUserId?: number,
+  ) {
+    return await this.fetchAllUserCreatedCharactersProvider.getAllUserCharacters(
+      requestUserId,
+      pagination,
+      targetUserId,
+    );
+  }
+  async getLikedCharactersByUser(
+    loggedInUserId: number,
+    pagination: PaginationQueryDto,
+    targetUserId?: number,
+  ) {
+    return await this.fetchUserLikedCharactersProvider.getLikedCharactersByUser(
+      loggedInUserId,
+      pagination,
+      targetUserId,
+    );
   }
 }

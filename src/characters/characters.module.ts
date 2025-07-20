@@ -9,12 +9,14 @@ import { S3Service } from '../uploads/s3.service';
 import { UpdateCharacterProvider } from './providers/update-character.provider';
 import { DeleteCharacterProvider } from './providers/delete-character.provider';
 import { Chat } from '../chats/chat.entity';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Character, Chat])],
   providers: [
     CharactersService,
     CreateCharacterProvider,
+    PaginationProvider,
     S3Service,
     UpdateCharacterProvider,
     DeleteCharacterProvider,
