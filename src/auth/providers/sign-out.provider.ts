@@ -31,7 +31,7 @@ export class SignOutProvider {
       if (error instanceof UnauthorizedException) {
         throw error;
       }
-      throw new BadRequestException(error);
+      throw new BadRequestException(error.message || 'Failed to sign out!');
     }
   }
 }
