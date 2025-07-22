@@ -1,11 +1,12 @@
 import {
+  BadRequestException,
   Body,
   Controller,
+  Headers,
   HttpCode,
   HttpStatus,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dtos/sign-up.dto';
@@ -84,8 +85,13 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async resetPassword(
     @Body() resetPasswordDto: ResetPasswordDto,
-    @Query('token') token: string,
+    @Headers('authorization') authHeader: string,
   ) {
+    if (!authHeader?.startsWith('Bearer ')) {
+      throw new BadRequestException('JWT must be provided');
+    }
+
+    const token = authHeader.split(' ')[1];
     return await this.authService.resetPassword(resetPasswordDto, token);
   }
 }

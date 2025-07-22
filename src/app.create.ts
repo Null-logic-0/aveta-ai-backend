@@ -39,5 +39,6 @@ export function appCreate(app: INestApplication): void {
   app.enableCors({
     origin: 'http://localhost:5173',
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'token'],
   });
 }
