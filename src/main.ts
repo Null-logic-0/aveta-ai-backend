@@ -9,7 +9,10 @@ async function bootstrap() {
   appCreate(app);
 
   app.useGlobalInterceptors(new TransformInterceptor());
-  app.useGlobalFilters(new AllExceptionsFilter());
+
+  if (process.env.NODE_ENV === 'development') {
+    app.useGlobalFilters(new AllExceptionsFilter());
+  }
 
   await app.listen(process.env.PORT ?? 3000);
 }

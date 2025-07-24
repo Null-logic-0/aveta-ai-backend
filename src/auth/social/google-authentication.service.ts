@@ -72,7 +72,7 @@ export class GoogleAuthenticationService {
         user,
       };
     } catch (error) {
-      throw new UnauthorizedException(error.message);
+      throw new UnauthorizedException(error.message || 'Failed to sign in!');
     }
   }
 }
