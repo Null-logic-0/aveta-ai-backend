@@ -15,15 +15,14 @@ export function appCreate(app: INestApplication): void {
   );
 
   app.use((_req: Request, res: Response, next: NextFunction) => {
-    res.setHeader('Cross-Origin-Opener-Policy', 'unsafe-none');
-    res.setHeader('Cross-Origin-Embedder-Policy', 'unsafe-none');
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'unsafe-none');
 
     next();
   });
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Sell-My-Ride')
+    .setTitle('Aveta AI')
     .setDescription('Use The base Api URL as http://localhost:3000')
     .setLicense(
       'Apache License 2.0',
@@ -39,6 +38,5 @@ export function appCreate(app: INestApplication): void {
   app.enableCors({
     origin: 'http://localhost:5173',
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'token'],
   });
 }

@@ -41,7 +41,9 @@ export class UsersService {
         },
       });
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new BadRequestException(
+        error.message || 'Failed to fetch all users!',
+      );
     }
   }
 
@@ -57,12 +59,20 @@ export class UsersService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new BadRequestException(error || 'Oops...something went wrong');
+      throw new BadRequestException(
+        error.message || 'Oops...something went wrong',
+      );
     }
   }
 
-  findOneByEmail(email: string) {
-    return this.findOneByEmailProvider.findOneByEmail(email);
+  async findOneByEmail(email: string) {
+    return await this.findOneByEmailProvider.findOneByEmail(email);
+  }
+
+  async findOneByGoogleId(googleId: string) {
+    return await this.usersRepository.findOne({
+      where: { googleId },
+    });
   }
 
   async updateUserRole(id: number, attrs: Partial<User>) {

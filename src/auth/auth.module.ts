@@ -15,6 +15,9 @@ import { SignOutProvider } from './providers/sign-out.provider';
 import { UpdatePassword } from './providers/update-password.provider';
 import { ForgotPasswordProvider } from './providers/forgot-password.provider';
 import { ResetPasswordProvider } from './providers/reset-password.provider';
+import { CreateGoogleUserProvider } from './providers/create-google-user.provider';
+import { GoogleAuthenticationController } from './social/google-authentication.controller';
+import { GoogleAuthenticationService } from './social/google-authentication.service';
 
 @Module({
   imports: [
@@ -22,12 +25,13 @@ import { ResetPasswordProvider } from './providers/reset-password.provider';
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, GoogleAuthenticationController],
   providers: [
     AuthService,
     SignUpProvider,
     SignInProvider,
     SignOutProvider,
+    GoogleAuthenticationService,
     {
       provide: HashingProvider,
       useClass: BcryptProvider,
@@ -36,7 +40,13 @@ import { ResetPasswordProvider } from './providers/reset-password.provider';
     UpdatePassword,
     ForgotPasswordProvider,
     ResetPasswordProvider,
+    CreateGoogleUserProvider,
   ],
-  exports: [AuthService, HashingProvider],
+  exports: [
+    AuthService,
+    HashingProvider,
+    GoogleAuthenticationService,
+    CreateGoogleUserProvider,
+  ],
 })
 export class AuthModule {}

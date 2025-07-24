@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -74,6 +75,14 @@ export class UsersController {
     summary: 'Fetch current logged-in user profile.',
   })
   async getCurrentUser(@GetActiveUser() user: ActiveUserData) {
+    const foundUser = user.googleId
+      ? await this.usersService.findOneByGoogleId(user.googleId)
+      : await this.usersService.getOne(user.sub);
+
+    if (!foundUser) {
+      throw new NotFoundException('User not found');
+    }
+
     return await this.usersService.getOne(user.sub);
   }
 
