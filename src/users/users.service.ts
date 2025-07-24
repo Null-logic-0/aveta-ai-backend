@@ -65,6 +65,12 @@ export class UsersService {
     return this.findOneByEmailProvider.findOneByEmail(email);
   }
 
+  async findOneByGoogleId(googleId: string) {
+    return this.usersRepository.findOne({
+      where: { googleId },
+    });
+  }
+
   async updateUserRole(id: number, attrs: Partial<User>) {
     try {
       const user = await this.usersRepository.findOneBy({ id });
