@@ -19,6 +19,7 @@ import { ActiveUserData } from './interface/active-user.interface';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
 import { ForgotPasswordDto } from './dtos/forgot-password.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
+import { RefreshTokenDto } from './dtos/refresh-token.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -93,5 +94,15 @@ export class AuthController {
 
     const token = authHeader.split(' ')[1];
     return await this.authService.resetPassword(resetPasswordDto, token);
+  }
+
+  @Post('refresh-token')
+  @ApiOperation({
+    summary: 'Refresh-token.',
+  })
+  @HttpCode(HttpStatus.OK)
+  @Auth(AuthType.None)
+  async refreshTokens(@Body() refreshTokenDTo: RefreshTokenDto) {
+    return this.authService.refreshTokens(refreshTokenDTo);
   }
 }

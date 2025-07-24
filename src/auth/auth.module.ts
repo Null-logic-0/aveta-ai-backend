@@ -18,6 +18,7 @@ import { ResetPasswordProvider } from './providers/reset-password.provider';
 import { CreateGoogleUserProvider } from './providers/create-google-user.provider';
 import { GoogleAuthenticationController } from './social/google-authentication.controller';
 import { GoogleAuthenticationService } from './social/google-authentication.service';
+import { RefreshTokensProvider } from './providers/refresh-tokens.provider';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { GoogleAuthenticationService } from './social/google-authentication.serv
     ForgotPasswordProvider,
     ResetPasswordProvider,
     CreateGoogleUserProvider,
+    RefreshTokensProvider,
   ],
   exports: [
     AuthService,

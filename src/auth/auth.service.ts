@@ -12,6 +12,8 @@ import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { ResetPasswordProvider } from './providers/reset-password.provider';
 import { GoogleUser } from './interface/google-user.interface';
 import { CreateGoogleUserProvider } from './providers/create-google-user.provider';
+import { RefreshTokenDto } from './dtos/refresh-token.dto';
+import { RefreshTokensProvider } from './providers/refresh-tokens.provider';
 
 @Injectable()
 export class AuthService {
@@ -29,6 +31,8 @@ export class AuthService {
     private readonly resetPasswordProvider: ResetPasswordProvider,
 
     private readonly createGoogleUserProvider: CreateGoogleUserProvider,
+
+    private readonly refreshTokenProvider: RefreshTokensProvider,
   ) {}
 
   async signUp(signUpDto: SignUpDto) {
@@ -60,5 +64,9 @@ export class AuthService {
 
   async resetPassword(resetPasswordDto: ResetPasswordDto, token: string) {
     return this.resetPasswordProvider.resetPassword(resetPasswordDto, token);
+  }
+
+  refreshTokens(refreshTokenDTo: RefreshTokenDto) {
+    return this.refreshTokenProvider.refreshTokens(refreshTokenDTo);
   }
 }
