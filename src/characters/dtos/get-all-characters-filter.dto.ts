@@ -2,7 +2,6 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Tags } from '../enums/tags.enum';
 import { ArrayNotEmpty, IsArray, IsEnum, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { Ranking } from '../enums/ranking.enum';
 
 export class GetAllCharactersFilterDto {
   @ApiPropertyOptional({
@@ -14,7 +13,7 @@ export class GetAllCharactersFilterDto {
   @IsOptional()
   @Transform(({ value }: { value: unknown }) => {
     if (typeof value === 'string') {
-      return [value];
+      return value.split(',');
     }
     if (Array.isArray(value) && value.every((v) => typeof v === 'string')) {
       return value as string[];
@@ -25,14 +24,4 @@ export class GetAllCharactersFilterDto {
   @ArrayNotEmpty()
   @IsEnum(Tags, { each: true })
   tags?: Tags[];
-
-  @ApiPropertyOptional({
-    description:
-      'Sort by character popularity: liked | active | trending (likes + chats)',
-    example: Ranking.TRENDING,
-    enum: Ranking,
-  })
-  @IsOptional()
-  @IsEnum(Ranking)
-  ranking?: Ranking;
 }
