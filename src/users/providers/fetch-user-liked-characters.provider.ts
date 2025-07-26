@@ -38,14 +38,10 @@ export class FetchUserLikedCharactersProvider {
 
       const query = this.characterRepository
         .createQueryBuilder('character')
+        .leftJoin('character.likedByUsers', 'likedUserFilter')
         .leftJoinAndSelect('character.likedByUsers', 'likedUser')
         .leftJoinAndSelect('character.creator', 'creator')
-        .loadRelationCountAndMap(
-          'character.likesCount',
-          'character.likedByUsers',
-        )
-
-        .where('likedUser.id = :targetUserId', { targetUserId });
+        .where('likedUserFilter.id = :targetUserId', { targetUserId });
 
       if (targetUserId !== requestUserId) {
         query.andWhere('character.visibility = :visibility', {
