@@ -34,6 +34,7 @@ export class EntityImagesService {
       if (type) {
         query.andWhere('imageType.type = :type', { type });
       }
+      query.orderBy('imageType.id', 'DESC');
       return await query.getMany();
     } catch (error) {
       throw new BadRequestException(error);
