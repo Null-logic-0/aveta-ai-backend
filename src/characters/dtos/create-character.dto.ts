@@ -69,11 +69,13 @@ export class CreateCharacterDto {
     isArray: true,
   })
   @Transform(({ value }: { value: unknown }) => {
-    if (typeof value === 'string') {
-      return [value];
+    if (Array.isArray(value)) {
+      return value.flatMap((v) =>
+        typeof v === 'string' ? v.split(',').map((s) => s.trim()) : [],
+      );
     }
-    if (Array.isArray(value) && value.every((v) => typeof v === 'string')) {
-      return value as string[];
+    if (typeof value === 'string') {
+      return value.split(',').map((tag) => tag.trim());
     }
     return [];
   })

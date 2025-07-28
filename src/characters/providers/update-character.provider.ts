@@ -75,7 +75,9 @@ export class UpdateCharacterProvider {
       ) {
         throw error;
       }
-      throw new BadRequestException(error || 'Failed to update character');
+      throw new BadRequestException(
+        error.message || 'Failed to update character',
+      );
     }
   }
 }

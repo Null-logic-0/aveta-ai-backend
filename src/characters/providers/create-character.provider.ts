@@ -53,7 +53,9 @@ export class CreateCharacterProvider {
       if (error instanceof UnauthorizedException) {
         throw error;
       }
-      throw new BadRequestException(error || 'Oops something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops something went wrong!',
+      );
     }
   }
 }

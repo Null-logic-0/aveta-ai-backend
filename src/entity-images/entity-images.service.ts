@@ -37,7 +37,9 @@ export class EntityImagesService {
       query.orderBy('imageType.id', 'DESC');
       return await query.getMany();
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new BadRequestException(
+        error.message || 'Oops...something went wrong!',
+      );
     }
   }
 
