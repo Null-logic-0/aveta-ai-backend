@@ -9,7 +9,7 @@ import { Character } from '../character.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/users/user.entity';
 import { S3Service } from 'src/uploads/s3.service';
-import { extractS3KeyFromUrl } from 'src/uploads/utils/extractS3KeyFromUrl';
+// import { extractS3KeyFromUrl } from 'src/uploads/utils/extractS3KeyFromUrl';
 
 @Injectable()
 export class DeleteCharacterProvider {
@@ -46,12 +46,12 @@ export class DeleteCharacterProvider {
         );
       }
 
-      if (character.avatar) {
-        const key = extractS3KeyFromUrl(character.avatar);
-        if (key) {
-          await this.s3Service.deleteObject(key);
-        }
-      }
+      // if (character.avatar) {
+      //   const key = extractS3KeyFromUrl(character.avatar);
+      //   if (key) {
+      //     await this.s3Service.deleteObject(key);
+      //   }
+      // }
 
       await this.characterRepository.remove(character);
       return {

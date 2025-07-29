@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 import { User } from '../../users/user.entity';
 import { S3Service } from '../../uploads/s3.service';
 import { UpdateCharacterDto } from '../dtos/update-character.dto';
-import { extractS3KeyFromUrl } from 'src/uploads/utils/extractS3KeyFromUrl';
+// import { extractS3KeyFromUrl } from 'src/uploads/utils/extractS3KeyFromUrl';
 
 @Injectable()
 export class UpdateCharacterProvider {
@@ -53,10 +53,10 @@ export class UpdateCharacterProvider {
       }
 
       if (file) {
-        if (character.avatar) {
-          const key = extractS3KeyFromUrl(character.avatar);
-          if (key) await this.s3Service.deleteObject(key);
-        }
+        // if (character.avatar) {
+        //   const key = extractS3KeyFromUrl(character.avatar);
+        //   if (key) await this.s3Service.deleteObject(key);
+        // }
 
         const imageUrl = await this.s3Service.uploadSingleImage(
           'characters',
