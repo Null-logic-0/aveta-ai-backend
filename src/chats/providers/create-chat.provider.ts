@@ -44,14 +44,26 @@ export class CreateChatProvider {
         throw new NotFoundException('Character not found!');
       }
 
+      const existingChat = await this.chatRepository.findOne({
+        where: {
+          user: { id: userId },
+          character: { id: characterId },
+        },
+        relations: ['user', 'character'],
+      });
+
+      if (existingChat) {
+        return { greeting: character.greeting, chat: existingChat };
+      }
+
       const theme = createChatDto.theme ?? undefined;
-      const userMessage = this.chatRepository.create({
+      const newChat = this.chatRepository.create({
         user,
         character,
         theme,
       });
 
-      const chat = await this.chatRepository.save(userMessage);
+      const chat = await this.chatRepository.save(newChat);
 
       return { greeting: character.greeting, chat };
     } catch (error) {
