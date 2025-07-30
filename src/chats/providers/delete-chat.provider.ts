@@ -45,7 +45,9 @@ export class DeleteChatProvider {
       ) {
         throw error;
       }
-      throw new BadRequestException(error || 'Oops something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops something went wrong!',
+      );
     }
   }
 }
