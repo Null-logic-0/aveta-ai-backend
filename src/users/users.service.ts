@@ -15,6 +15,7 @@ import { ToggleLikeCharacterProvider } from './providers/toggle-like-character.p
 import { FetchUserCreatedCharactersProvider } from './providers/fetch-user-created-characters.provider';
 import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { FetchUserLikedCharactersProvider } from './providers/fetch-user-liked-characters.provider';
+import { GetLikeStatusProvider } from './providers/get-like-status.provider';
 
 @Injectable()
 export class UsersService {
@@ -30,6 +31,8 @@ export class UsersService {
     private readonly fetchAllUserCreatedCharactersProvider: FetchUserCreatedCharactersProvider,
 
     private readonly fetchUserLikedCharactersProvider: FetchUserLikedCharactersProvider,
+
+    private readonly getLikeStatusProvider: GetLikeStatusProvider,
   ) {}
 
   getAll(currentUserId: number) {
@@ -183,6 +186,10 @@ export class UsersService {
       userId,
       characterId,
     );
+  }
+
+  async getLikeStatus(characterId: number, userId: number) {
+    return await this.getLikeStatusProvider.getLikeStatus(characterId, userId);
   }
 
   async getAllUserCharacters(

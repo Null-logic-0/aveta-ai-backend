@@ -12,6 +12,7 @@ import { Character } from 'src/characters/character.entity';
 import { FetchUserCreatedCharactersProvider } from './providers/fetch-user-created-characters.provider';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 import { FetchUserLikedCharactersProvider } from './providers/fetch-user-liked-characters.provider';
+import { GetLikeStatusProvider } from './providers/get-like-status.provider';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { FetchUserLikedCharactersProvider } from './providers/fetch-user-liked-c
     FetchUserCreatedCharactersProvider,
     PaginationProvider,
     FetchUserLikedCharactersProvider,
+    GetLikeStatusProvider,
   ],
   controllers: [UsersController],
   exports: [UsersService, TypeOrmModule],

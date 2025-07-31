@@ -166,13 +166,24 @@ export class UsersController {
 
   @Post('like-character/:characterId')
   @ApiOperation({
-    summary: 'Like character',
+    summary: 'Like/Unlike character',
   })
   async toggleLike(
     @GetActiveUser() user: ActiveUserData,
     @Param('characterId') characterId: number,
   ) {
     return await this.usersService.toggleLike(user.sub, characterId);
+  }
+
+  @Get('like-character/:characterId')
+  @ApiOperation({
+    summary: 'Fetch liked character by user',
+  })
+  async getLikeStatus(
+    @Param('characterId') characterId: number,
+    @GetActiveUser() user: ActiveUserData,
+  ) {
+    return await this.usersService.getLikeStatus(characterId, user.sub);
   }
 
   @Delete('/me/delete-account')
