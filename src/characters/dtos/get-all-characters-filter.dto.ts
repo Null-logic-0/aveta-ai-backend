@@ -1,6 +1,12 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Tags } from '../enums/tags.enum';
-import { ArrayNotEmpty, IsArray, IsEnum, IsOptional } from 'class-validator';
+import {
+  ArrayNotEmpty,
+  IsArray,
+  IsEnum,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class GetAllCharactersFilterDto {
@@ -24,4 +30,11 @@ export class GetAllCharactersFilterDto {
   @ArrayNotEmpty()
   @IsEnum(Tags, { each: true })
   tags?: Tags[];
+
+  @ApiPropertyOptional({
+    description: 'Search Character',
+  })
+  @IsOptional()
+  @IsString()
+  search?: string;
 }

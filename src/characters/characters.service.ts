@@ -80,6 +80,13 @@ export class CharactersService {
         );
       }
 
+      if (filters.search) {
+        query.andWhere(
+          '(LOWER(character.characterName) LIKE LOWER(:search) OR LOWER(character.description) LIKE LOWER(:search))',
+          { search: `%${filters.search}%` },
+        );
+      }
+
       return await this.paginationProvider.paginateQuery(
         {
           limit: paginateCharacters?.limit,
