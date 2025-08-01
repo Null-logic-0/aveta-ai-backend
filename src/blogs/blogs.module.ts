@@ -8,6 +8,7 @@ import { S3Service } from 'src/uploads/s3.service';
 import { CreateBlogProvider } from './providers/create-blog.provider';
 import { UpdateBlogProvider } from './providers/update-blog.provider';
 import { DeleteBlogProvider } from './providers/delete-blog.provider';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Blog, User])],
@@ -17,6 +18,7 @@ import { DeleteBlogProvider } from './providers/delete-blog.provider';
     CreateBlogProvider,
     UpdateBlogProvider,
     DeleteBlogProvider,
+    PaginationProvider,
   ],
   controllers: [BlogsController],
 })

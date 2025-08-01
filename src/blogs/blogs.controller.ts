@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -20,6 +21,7 @@ import { GetActiveUser } from 'src/auth/decorators/getActiveUser';
 import { ActiveUserData } from 'src/auth/interface/active-user.interface';
 import { UpdateBlogDto } from './dtos/update-blog.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 
 @Controller('blogs')
 export class BlogsController {
@@ -30,8 +32,9 @@ export class BlogsController {
   @ApiOperation({
     summary: 'Fetch all blogs.',
   })
-  async getAllBlogs() {
-    return await this.blogsService.getAllBlogs();
+  async getAllBlogs(@Query() query: PaginationQueryDto) {
+    const { limit, page } = query;
+    return await this.blogsService.getAllBlogs({ limit, page });
   }
 
   @Get('/:blogId')
