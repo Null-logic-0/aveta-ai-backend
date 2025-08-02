@@ -50,7 +50,7 @@ export class UsersController {
     return await this.usersService.updateUserRole(id, updateUserRole);
   }
 
-  @Patch('toggleBlock-user/:id')
+  @Patch('toggle-block-user/:id')
   @Roles(Role.Admin)
   @ApiOperation({
     summary: 'Block/Unblock any user by admin.',
