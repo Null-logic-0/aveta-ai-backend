@@ -6,6 +6,8 @@ import { Repository } from 'typeorm';
 import { CreateEntityImageDto } from './dtos/create-entity-image.dto';
 import { EntityImageType } from './enums/entity-images.enum';
 import { DeleteEntityImageProvider } from './providers/delete-entity-image.provider';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { PaginateEntityImageDto } from './dtos/paginate-entity-image.dto';
 
 @Injectable()
 export class EntityImagesService {
@@ -14,6 +16,7 @@ export class EntityImagesService {
     private readonly entityImageRepository: Repository<EntityImage>,
     private readonly createEntityImageProvider: CreateEntityImageProvider,
     private readonly deleteEntityImageProvider: DeleteEntityImageProvider,
+    private readonly paginationProvider: PaginationProvider,
   ) {}
 
   async create(
@@ -28,14 +31,24 @@ export class EntityImagesService {
     );
   }
 
-  async getAll(type?: EntityImageType) {
+  async getAll(
+    type?: EntityImageType,
+    paginateEntityImage?: PaginateEntityImageDto,
+  ) {
     try {
       const query = this.entityImageRepository.createQueryBuilder('imageType');
       if (type) {
         query.andWhere('imageType.type = :type', { type });
       }
       query.orderBy('imageType.id', 'DESC');
-      return await query.getMany();
+
+      return await this.paginationProvider.paginateQuery(
+        {
+          limit: paginateEntityImage?.limit,
+          page: paginateEntityImage?.page,
+        },
+        query,
+      );
     } catch (error) {
       throw new BadRequestException(
         error.message || 'Oops...something went wrong!',

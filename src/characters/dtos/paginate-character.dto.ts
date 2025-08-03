@@ -1,7 +1,8 @@
 import { Type } from 'class-transformer';
 import { IsOptional, IsPositive } from 'class-validator';
+import { GetAllCharactersFilterDto } from './get-all-characters-filter.dto';
 
-export class PaginationQueryDto {
+export class PaginateCharacterDto extends GetAllCharactersFilterDto {
   @IsOptional()
   @Type(() => Number)
   @IsPositive()

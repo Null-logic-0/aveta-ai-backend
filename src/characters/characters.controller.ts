@@ -17,7 +17,7 @@ import { GetActiveUser } from 'src/auth/decorators/getActiveUser';
 import { ActiveUserData } from 'src/auth/interface/active-user.interface';
 import { CreateCharacterDto } from './dtos/create-character.dto';
 import { UpdateCharacterDto } from './dtos/update-character.dto';
-import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { PaginateCharacterDto } from './dtos/paginate-character.dto';
 
 @Controller('characters')
 export class CharactersController {
@@ -27,7 +27,7 @@ export class CharactersController {
   @ApiOperation({
     summary: 'Fetch all characters.',
   })
-  async getAllCharacters(@Query() query: PaginationQueryDto) {
+  async getAllCharacters(@Query() query: PaginateCharacterDto) {
     const { limit, page, ...filters } = query;
 
     return await this.charactersService.getAll(filters, { limit, page });

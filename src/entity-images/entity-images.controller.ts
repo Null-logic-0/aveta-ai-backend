@@ -19,7 +19,7 @@ import { Role } from 'src/auth/enums/role.enum';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation } from '@nestjs/swagger';
-import { GetEntityImagesQueryDto } from './dtos/get-entity-images-query.dto';
+import { PaginateEntityImageDto } from './dtos/paginate-entity-image.dto';
 
 @Controller('entity-images')
 export class EntityImagesController {
@@ -49,8 +49,9 @@ export class EntityImagesController {
     summary: 'Fetch all images.',
   })
   @Auth(AuthType.Bearer)
-  async getAllImages(@Query() query: GetEntityImagesQueryDto) {
-    return await this.entityImagesService.getAll(query.type);
+  async getAllImages(@Query() query: PaginateEntityImageDto) {
+    const { limit, page, ...type } = query;
+    return await this.entityImagesService.getAll(type.type, { limit, page });
   }
 
   @Delete('/:imageId')

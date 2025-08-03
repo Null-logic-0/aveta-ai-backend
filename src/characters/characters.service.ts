@@ -13,9 +13,9 @@ import { UpdateCharacterProvider } from './providers/update-character.provider';
 import { UpdateCharacterDto } from './dtos/update-character.dto';
 import { DeleteCharacterProvider } from './providers/delete-character.provider';
 import { GetAllCharactersFilterDto } from './dtos/get-all-characters-filter.dto';
-import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 import { Visibility } from './enums/visibility.enum';
+import { PaginateCharacterDto } from './dtos/paginate-character.dto';
 
 @Injectable()
 export class CharactersService {
@@ -60,7 +60,7 @@ export class CharactersService {
 
   async getAll(
     filters: GetAllCharactersFilterDto,
-    paginateCharacters: PaginationQueryDto,
+    paginateCharacters: PaginateCharacterDto,
   ) {
     try {
       const query = this.characterRepository

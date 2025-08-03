@@ -7,6 +7,7 @@ import { User } from 'src/users/user.entity';
 import { EntityImage } from './entity-image.entity';
 import { S3Service } from 'src/uploads/s3.service';
 import { DeleteEntityImageProvider } from './providers/delete-entity-image.provider';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, EntityImage])],
@@ -15,6 +16,7 @@ import { DeleteEntityImageProvider } from './providers/delete-entity-image.provi
     CreateEntityImageProvider,
     S3Service,
     DeleteEntityImageProvider,
+    PaginationProvider,
   ],
   controllers: [EntityImagesController],
 })
