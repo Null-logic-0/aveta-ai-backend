@@ -63,9 +63,13 @@ export class ChatService {
     }
   }
 
-  async getAll() {
+  async getAll(userId: number) {
     try {
-      return await this.chatRepository.find();
+      return await this.chatRepository.find({
+        where: { user: { id: userId } },
+        relations: ['character'],
+        order: { updatedAt: 'DESC' },
+      });
     } catch (error) {
       throw new BadRequestException(error);
     }

@@ -25,8 +25,12 @@ export class DeleteChatProvider {
           'Invalid credentials,Please sign-in again!',
         );
       }
-      const chat = await this.chatRepository.findOneBy({
-        id: chatId,
+      const chat = await this.chatRepository.findOne({
+        where: {
+          id: chatId,
+          user: { id: userId },
+        },
+        relations: ['user'],
       });
 
       if (!chat) {

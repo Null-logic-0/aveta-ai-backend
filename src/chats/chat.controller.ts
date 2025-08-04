@@ -25,8 +25,8 @@ export class ChatController {
   @ApiOperation({
     summary: 'Fetch all chats!',
   })
-  async getAllChat() {
-    return await this.chatService.getAll();
+  async getAllChat(@GetActiveUser() user: ActiveUserData) {
+    return await this.chatService.getAll(user.sub);
   }
 
   @Get('/:chatId')
