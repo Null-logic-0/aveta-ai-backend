@@ -77,6 +77,12 @@ export class User {
   })
   isPaid: boolean;
 
+  @Column({ type: 'int', default: 0 })
+  messagesSentToday: number;
+
+  @Column({ type: 'timestamp', nullable: true })
+  lastMessageSentAt: Date;
+
   @OneToMany(() => Blog, (blogList) => blogList.creator)
   blogs: Blog[];
 

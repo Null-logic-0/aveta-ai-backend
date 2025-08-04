@@ -15,6 +15,7 @@ import { SendMessageDto } from '../dtos/send-message.dto';
 import { Message } from '../message.entity';
 import { Sender } from '../enums/sender.enum';
 import { Chat } from 'src/chats/chat.entity';
+import { MESSAGE_LIMITS } from 'src/subscription/config/user-plan.config';
 
 @Injectable()
 export class SendMessageProvider {
@@ -34,6 +35,29 @@ export class SendMessageProvider {
     });
   }
 
+  private checkUserQuota(user: User): void {
+    const today = new Date();
+    const lastSent = user.lastMessageSentAt;
+
+    const isSameDay =
+      lastSent &&
+      lastSent.getUTCFullYear() === today.getUTCFullYear() &&
+      lastSent.getUTCMonth() === today.getUTCMonth() &&
+      lastSent.getUTCDate() === today.getUTCDate();
+
+    const maxMessages = MESSAGE_LIMITS[user.UserPlan];
+
+    if (!isSameDay) {
+      user.messagesSentToday = 0;
+    }
+
+    if (user.messagesSentToday >= maxMessages) {
+      throw new BadRequestException(
+        `You have reached your daily limit of ${maxMessages} messages.`,
+      );
+    }
+  }
+
   async create(userId: number, chatId: number, sendMessageDto: SendMessageDto) {
     try {
       const user = await this.userRepository.findOneBy({ id: userId });
@@ -42,6 +66,8 @@ export class SendMessageProvider {
           'Invalid credentials,Please sign-in again!',
         );
       }
+
+      this.checkUserQuota(user);
 
       const chat = await this.chatRepository.findOneBy({ id: chatId });
       if (!chat) {
@@ -75,6 +101,11 @@ export class SendMessageProvider {
         character: chat.character,
         chat,
       });
+
+      user.messagesSentToday += 1;
+      user.lastMessageSentAt = new Date();
+      await this.userRepository.save(user);
+
       return {
         userMessage,
         aiMessage,
