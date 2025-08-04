@@ -1,6 +1,14 @@
+import * as express from 'express';
+import { Response, Request, NextFunction } from 'express';
+
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { Response, Request, NextFunction } from 'express';
+
+declare module 'express' {
+  interface Request {
+    rawBody?: Buffer;
+  }
+}
 
 export function appCreate(app: INestApplication): void {
   app.useGlobalPipes(
@@ -20,6 +28,17 @@ export function appCreate(app: INestApplication): void {
 
     next();
   });
+
+  app.use('/subscription/stripe', express.raw({ type: 'application/json' }));
+  app.use(
+    '/subscription/stripe',
+    (req: Request, _res: Response, next: NextFunction) => {
+      req.rawBody = req.body;
+      next();
+    },
+  );
+
+  app.use(express.json());
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Aveta AI')

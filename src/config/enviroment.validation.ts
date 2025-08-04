@@ -50,4 +50,14 @@ export default Joi.object({
   }),
 
   OPENAI_API_KEY: Joi.string().required(),
+
+  STRIPE_PUBLISHABLE_KEY: Joi.string().required(),
+  STRIPE_SECRET_KEY: Joi.string().required(),
+  STRIPE_WEBHOOK_SECRET: Joi.string().required(),
+
+  PAYMENT_SUCCESS_URL: Joi.string().required(),
+  PAYMENT_CANCEL_URL: Joi.string().required(),
+
+  BASIC_PRICE: Joi.string().required(),
+  PREMIUM_PRICE: Joi.string().required(),
 });

@@ -23,4 +23,14 @@ export default registerAs('appConfig', () => ({
   resendAPI: process.env.RESEND_API_KEY,
 
   openAIKey: process.env.OPENAI_API_KEY,
+
+  stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+  stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+  stripeWebhook: process.env.STRIPE_WEBHOOK_SECRET,
+
+  paymentSuccessUrl: process.env.PAYMENT_SUCCESS_URL,
+  paymentCancelUrl: process.env.PAYMENT_CANCEL_URL,
+
+  basicPrice: process.env.BASIC_PRICE,
+  premiumPrice: process.env.PREMIUM_PRICE,
 }));
