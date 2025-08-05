@@ -13,7 +13,7 @@ import { UpdateCharacterProvider } from './providers/update-character.provider';
 import { UpdateCharacterDto } from './dtos/update-character.dto';
 import { DeleteCharacterProvider } from './providers/delete-character.provider';
 import { GetAllCharactersFilterDto } from './dtos/get-all-characters-filter.dto';
-import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { PaginationProvider } from '../common/pagination/providers/pagination.provider';
 import { Visibility } from './enums/visibility.enum';
 import { PaginateCharacterDto } from './dtos/paginate-character.dto';
 

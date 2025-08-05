@@ -1,11 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { MessagesService } from './messages.service';
-import { Auth } from 'src/auth/decorators/auth.decorator';
-import { AuthType } from 'src/auth/enums/auth-type.enum';
 import { ApiOperation } from '@nestjs/swagger';
-import { GetActiveUser } from 'src/auth/decorators/getActiveUser';
-import { ActiveUserData } from 'src/auth/interface/active-user.interface';
+import { MessagesService } from './messages.service';
 import { SendMessageDto } from './dtos/send-message.dto';
+import { Auth } from '../../auth/decorators/auth.decorator';
+import { AuthType } from '../../auth/enums/auth-type.enum';
+import { GetActiveUser } from '../../auth/decorators/getActiveUser';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { ActiveUserData } from '../../auth/interface/active-user.interface';
 
 @Controller('messages')
 export class MessagesController {

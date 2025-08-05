@@ -4,12 +4,12 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/users/user.entity';
-import { Blog } from '../blogs.entity';
 import { Repository } from 'typeorm';
-import { S3Service } from 'src/uploads/s3.service';
-import { extractS3KeyFromUrl } from 'src/uploads/utils/extractS3KeyFromUrl';
+import { Blog } from '../blogs.entity';
+import { S3Service } from '../../uploads/s3.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '../../users/user.entity';
+import { extractS3KeyFromUrl } from '../../uploads/utils/extractS3KeyFromUrl';
 
 @Injectable()
 export class DeleteBlogProvider {
@@ -55,7 +55,9 @@ export class DeleteBlogProvider {
       ) {
         throw error;
       }
-      throw new BadRequestException(error || 'Oops something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops something went wrong!',
+      );
     }
   }
 }

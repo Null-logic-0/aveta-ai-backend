@@ -1,8 +1,8 @@
+import { join } from 'path';
 import { Global, Module } from '@nestjs/common';
 import { MailService } from './providers/mail.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { join } from 'path';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 
 @Global()

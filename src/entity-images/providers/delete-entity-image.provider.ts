@@ -4,12 +4,12 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { S3Service } from 'src/uploads/s3.service';
+import { S3Service } from '../../uploads/s3.service';
 import { Repository } from 'typeorm';
 import { EntityImage } from '../entity-image.entity';
-import { User } from 'src/users/user.entity';
+import { User } from '../../users/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { extractS3KeyFromUrl } from 'src/uploads/utils/extractS3KeyFromUrl';
+import { extractS3KeyFromUrl } from '../../uploads/utils/extractS3KeyFromUrl';
 
 @Injectable()
 export class DeleteEntityImageProvider {
@@ -59,7 +59,9 @@ export class DeleteEntityImageProvider {
       ) {
         throw error;
       }
-      throw new BadRequestException(error || 'Oops something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops something went wrong!',
+      );
     }
   }
 }

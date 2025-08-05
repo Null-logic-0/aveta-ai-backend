@@ -12,16 +12,16 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { Roles } from '../auth/decorators/roles.decorator';
-import { Role } from '../auth/enums/role.enum';
 import { ApiOperation } from '@nestjs/swagger';
-import { GetActiveUser } from 'src/auth/decorators/getActiveUser';
-import { ActiveUserData } from 'src/auth/interface/active-user.interface';
+import { UsersService } from './users.service';
+import { Role } from '../auth/enums/role.enum';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { GetActiveUser } from '../auth/decorators/getActiveUser';
 import { UpdateUserRoleDto } from './dtos/update-user-role.dto';
 import { UpdateUserProfileDto } from './dtos/update-user-profile.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { ActiveUserData } from '../auth/interface/active-user.interface';
+import { PaginationQueryDto } from '../common/pagination/dtos/pagination-query.dto';
 
 @Controller('users')
 export class UsersController {

@@ -7,8 +7,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Character } from '../character.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/users/user.entity';
-import { S3Service } from 'src/uploads/s3.service';
+import { User } from '../../users/user.entity';
+import { S3Service } from '../../uploads/s3.service';
 // import { extractS3KeyFromUrl } from 'src/uploads/utils/extractS3KeyFromUrl';
 
 @Injectable()

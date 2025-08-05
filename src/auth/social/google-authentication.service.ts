@@ -1,11 +1,11 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import jwtConfig from '../config/jwt.config';
 import { ConfigType } from '@nestjs/config';
-import { OAuth2Client } from 'google-auth-library';
-import { UsersService } from 'src/users/users.service';
-import { GenerateTokensProvider } from '../providers/generate-tokens.provider';
-import { GoogleTokenDto } from './dtos/google-token.dto';
+import jwtConfig from '../config/jwt.config';
 import { AuthService } from '../auth.service';
+import { OAuth2Client } from 'google-auth-library';
+import { UsersService } from '../../users/users.service';
+import { GoogleTokenDto } from './dtos/google-token.dto';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { GenerateTokensProvider } from '../providers/generate-tokens.provider';
 
 @Injectable()
 export class GoogleAuthenticationService {

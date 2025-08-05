@@ -43,7 +43,9 @@ export class MailService {
         },
       });
     } catch (error) {
-      throw new BadRequestException(error || 'Failed to send welcome email');
+      throw new BadRequestException(
+        error.message || 'Failed to send welcome email',
+      );
     }
   }
 
@@ -61,7 +63,7 @@ export class MailService {
       });
     } catch (error) {
       throw new BadRequestException(
-        error || 'Failed to send password reset email',
+        error.message || 'Failed to send password reset email',
       );
     }
   }

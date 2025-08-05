@@ -4,12 +4,12 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { AccessTokenGuard } from '../access-token/access-token.guard';
-import { AuthType } from '../../../auth/enums/auth-type.enum';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../../../users/user.entity';
 import { Repository } from 'typeorm';
+import { Reflector } from '@nestjs/core';
+import { User } from '../../../users/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { AuthType } from '../../../auth/enums/auth-type.enum';
+import { AccessTokenGuard } from '../access-token/access-token.guard';
 import { AUTH_TYPE_KEY } from '../../../auth/constants/auth.constants';
 
 @Injectable()

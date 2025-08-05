@@ -14,14 +14,14 @@ import { BlogsService } from './blogs.service';
 import { ApiOperation } from '@nestjs/swagger';
 import { Auth } from '../auth/decorators/auth.decorator';
 import { AuthType } from '../auth/enums/auth-type.enum';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from 'src/auth/enums/role.enum';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../auth/enums/role.enum';
 import { CreateBlogDto } from './dtos/create-blog.dto';
-import { GetActiveUser } from 'src/auth/decorators/getActiveUser';
-import { ActiveUserData } from 'src/auth/interface/active-user.interface';
+import { GetActiveUser } from '../auth/decorators/getActiveUser';
+import { ActiveUserData } from '../auth/interface/active-user.interface';
 import { UpdateBlogDto } from './dtos/update-blog.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
+import { PaginationQueryDto } from '../common/pagination/dtos/pagination-query.dto';
 
 @Controller('blogs')
 export class BlogsController {

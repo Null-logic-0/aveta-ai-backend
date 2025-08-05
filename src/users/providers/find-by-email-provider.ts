@@ -24,7 +24,7 @@ export class FindByEmailProvider {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new UnauthorizedException(error);
+      throw new UnauthorizedException(error.message || 'Error occurred!');
     }
   }
 }

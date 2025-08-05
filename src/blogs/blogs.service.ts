@@ -12,8 +12,8 @@ import { UpdateBlogDto } from './dtos/update-blog.dto';
 import { CreateBlogProvider } from './providers/create-blog.provider';
 import { UpdateBlogProvider } from './providers/update-blog.provider';
 import { DeleteBlogProvider } from './providers/delete-blog.provider';
-import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
-import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { PaginationQueryDto } from '../common/pagination/dtos/pagination-query.dto';
+import { PaginationProvider } from '../common/pagination/providers/pagination.provider';
 
 @Injectable()
 export class BlogsService {
@@ -60,7 +60,9 @@ export class BlogsService {
         query,
       );
     } catch (error) {
-      throw new BadRequestException(error || 'Oops something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops something went wrong!',
+      );
     }
   }
 
@@ -75,7 +77,9 @@ export class BlogsService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new BadRequestException(error || 'Oops something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops something went wrong!',
+      );
     }
   }
 
