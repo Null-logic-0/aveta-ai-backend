@@ -1,3 +1,4 @@
+import { map, Observable } from 'rxjs';
 import {
   CallHandler,
   ExecutionContext,
@@ -5,7 +6,6 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class DataResponseInterceptor implements NestInterceptor {

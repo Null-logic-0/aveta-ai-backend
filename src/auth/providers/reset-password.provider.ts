@@ -6,7 +6,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/users/user.entity';
+import { User } from '../../users/user.entity';
 import { Repository } from 'typeorm';
 import { HashingProvider } from './hashing.provider';
 import { ResetPasswordDto } from '../dtos/reset-password.dto';
@@ -48,7 +48,9 @@ export class ResetPasswordProvider {
       if (error instanceof InternalServerErrorException) {
         throw error;
       }
-      throw new BadRequestException(error || 'Oops,Something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops,Something went wrong!',
+      );
     }
   }
 }

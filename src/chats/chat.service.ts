@@ -4,11 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
+import { Repository } from 'typeorm';
+import { Chat } from './chat.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateChatDto } from './dtos/create-chat.dto';
 import { CreateChatProvider } from './providers/create-chat.provider';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Chat } from './chat.entity';
-import { Repository } from 'typeorm';
 import { DeleteChatProvider } from './providers/delete-chat.provider';
 import { UpdateChatThemeProvider } from './providers/update-chat-theme.provider';
 import { UpdateChatThemeDto } from './dtos/update-chat-theme.dto';
@@ -59,7 +59,7 @@ export class ChatService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new BadRequestException(error);
+      throw new BadRequestException(error.message || 'Error occurred!');
     }
   }
 
@@ -71,7 +71,7 @@ export class ChatService {
         order: { updatedAt: 'DESC' },
       });
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new BadRequestException(error.message || 'Error occurred!');
     }
   }
 

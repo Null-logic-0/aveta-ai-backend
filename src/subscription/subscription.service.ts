@@ -4,10 +4,10 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { User } from '../users/user.entity';
 import { ConfigService } from '@nestjs/config';
 import { UserPlan } from './enums/userPlan.enum';
-import { Repository } from 'typeorm';
-import { User } from 'src/users/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class SubscriptionService {
     );
 
     if (!secretKey) {
-      throw new Error(
+      throw new NotFoundException(
         'Stripe secret key is not defined in environment variables',
       );
     }

@@ -12,8 +12,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Blog } from '../blogs/blogs.entity';
-import { Character } from 'src/characters/character.entity';
 import { Chat } from '../chats/chat.entity';
+import { Character } from '../characters/character.entity';
 
 @Entity()
 export class User {

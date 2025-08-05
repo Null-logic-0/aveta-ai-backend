@@ -4,12 +4,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Character } from 'src/characters/character.entity';
+import { Character } from '../../characters/character.entity';
 import { User } from '../user.entity';
 import { Repository } from 'typeorm';
-import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
-import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
-import { Visibility } from 'src/characters/enums/visibility.enum';
+import { PaginationProvider } from '../../common/pagination/providers/pagination.provider';
+import { PaginationQueryDto } from '../../common/pagination/dtos/pagination-query.dto';
+import { Visibility } from '../../characters/enums/visibility.enum';
 
 @Injectable()
 export class FetchUserLikedCharactersProvider {

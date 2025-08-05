@@ -1,7 +1,7 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
+import { User } from '../../users/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { GoogleUser } from '../interface/google-user.interface';
 
 @Injectable()
@@ -16,7 +16,9 @@ export class CreateGoogleUserProvider {
       const user = this.usersRepository.create(googleUser);
       return await this.usersRepository.save(user);
     } catch (error) {
-      throw new ConflictException(error);
+      throw new ConflictException(
+        error.message || 'Oops...something went wrong!',
+      );
     }
   }
 }

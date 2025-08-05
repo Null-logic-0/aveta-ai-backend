@@ -10,13 +10,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { EntityImagesService } from './entity-images.service';
-import { GetActiveUser } from 'src/auth/decorators/getActiveUser';
-import { ActiveUserData } from 'src/auth/interface/active-user.interface';
+import { GetActiveUser } from '../auth/decorators/getActiveUser';
+import { ActiveUserData } from '../auth/interface/active-user.interface';
 import { CreateEntityImageDto } from './dtos/create-entity-image.dto';
-import { Auth } from 'src/auth/decorators/auth.decorator';
-import { AuthType } from 'src/auth/enums/auth-type.enum';
-import { Role } from 'src/auth/enums/role.enum';
-import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Auth } from '../auth/decorators/auth.decorator';
+import { AuthType } from '../auth/enums/auth-type.enum';
+import { Role } from '../auth/enums/role.enum';
+import { Roles } from '../auth/decorators/roles.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation } from '@nestjs/swagger';
 import { PaginateEntityImageDto } from './dtos/paginate-entity-image.dto';

@@ -4,12 +4,12 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UpdateBlogDto } from '../dtos/update-blog.dto';
-import { S3Service } from 'src/uploads/s3.service';
+import { Repository } from 'typeorm';
 import { Blog } from '../blogs.entity';
 import { User } from '../../users/user.entity';
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UpdateBlogDto } from '../dtos/update-blog.dto';
+import { S3Service } from '../../uploads/s3.service';
 import { extractS3KeyFromUrl } from '../../uploads/utils/extractS3KeyFromUrl';
 
 @Injectable()
@@ -65,7 +65,7 @@ export class UpdateBlogProvider {
       ) {
         throw error;
       }
-      throw new BadRequestException(error || 'Failed to update blog');
+      throw new BadRequestException(error.message || 'Failed to update blog');
     }
   }
 }

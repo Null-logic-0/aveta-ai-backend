@@ -1,13 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateEntityImageProvider } from './providers/create-entity-image.provider';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityImage } from './entity-image.entity';
-import { Repository } from 'typeorm';
-import { CreateEntityImageDto } from './dtos/create-entity-image.dto';
 import { EntityImageType } from './enums/entity-images.enum';
-import { DeleteEntityImageProvider } from './providers/delete-entity-image.provider';
-import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { CreateEntityImageDto } from './dtos/create-entity-image.dto';
 import { PaginateEntityImageDto } from './dtos/paginate-entity-image.dto';
+import { CreateEntityImageProvider } from './providers/create-entity-image.provider';
+import { DeleteEntityImageProvider } from './providers/delete-entity-image.provider';
+import { PaginationProvider } from '../common/pagination/providers/pagination.provider';
 
 @Injectable()
 export class EntityImagesService {

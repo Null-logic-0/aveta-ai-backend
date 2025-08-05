@@ -8,7 +8,7 @@ import { S3Service } from '../../uploads/s3.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user.entity';
 import { Repository } from 'typeorm';
-import { extractS3KeyFromUrl } from 'src/uploads/utils/extractS3KeyFromUrl';
+import { extractS3KeyFromUrl } from '../../uploads/utils/extractS3KeyFromUrl';
 
 @Injectable()
 export class UpdateUser {
@@ -69,7 +69,7 @@ export class UpdateUser {
       ) {
         throw error;
       }
-      throw new BadRequestException(error || 'Invalid update');
+      throw new BadRequestException(error.message || 'Invalid update');
     }
   }
 }

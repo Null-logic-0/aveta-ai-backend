@@ -3,11 +3,11 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../../users/user.entity';
-import { Blog } from '../blogs.entity';
 import { Repository } from 'typeorm';
-import { S3Service } from 'src/uploads/s3.service';
+import { Blog } from '../blogs.entity';
+import { User } from '../../users/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { S3Service } from '../../uploads/s3.service';
 import { CreateBlogDto } from '../dtos/create-blog.dto';
 
 @Injectable()
@@ -48,7 +48,9 @@ export class CreateBlogProvider {
       if (error instanceof UnauthorizedException) {
         throw error;
       }
-      throw new BadRequestException(error || 'Oops something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops something went wrong!',
+      );
     }
   }
 }

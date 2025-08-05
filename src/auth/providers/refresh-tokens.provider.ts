@@ -1,11 +1,11 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { ActiveUserData } from '../interface/active-user.interface';
-import { RefreshTokenDto } from '../dtos/refresh-token.dto';
-import { GenerateTokensProvider } from './generate-tokens.provider';
+import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
 import jwtConfig from '../config/jwt.config';
-import { JwtService } from '@nestjs/jwt';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../../users/users.service';
+import { RefreshTokenDto } from '../dtos/refresh-token.dto';
+import { GenerateTokensProvider } from './generate-tokens.provider';
+import { ActiveUserData } from '../interface/active-user.interface';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
 export class RefreshTokensProvider {
@@ -33,7 +33,7 @@ export class RefreshTokensProvider {
 
       return await this.generateTokensProvider.generateToken(user);
     } catch (error) {
-      throw new UnauthorizedException(error);
+      throw new UnauthorizedException(error.message || 'Error occurred!');
     }
   }
 }

@@ -4,18 +4,18 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { ConfigService } from '@nestjs/config';
 import { Repository } from 'typeorm';
+import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
 
 import OpenAI from 'openai';
 
 import { User } from '../../../users/user.entity';
-import { SendMessageDto } from '../dtos/send-message.dto';
 import { Message } from '../message.entity';
 import { Sender } from '../enums/sender.enum';
-import { Chat } from 'src/chats/chat.entity';
-import { MESSAGE_LIMITS } from 'src/subscription/config/user-plan.config';
+import { Chat } from '../../../chats/chat.entity';
+import { SendMessageDto } from '../dtos/send-message.dto';
+import { MESSAGE_LIMITS } from '../../../subscription/config/user-plan.config';
 
 @Injectable()
 export class SendMessageProvider {
@@ -118,7 +118,9 @@ export class SendMessageProvider {
         throw error;
       }
 
-      throw new BadRequestException(error || 'Oops... Something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops... Something went wrong!',
+      );
     }
   }
 }

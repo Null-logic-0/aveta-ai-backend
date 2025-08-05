@@ -6,11 +6,11 @@ import { User } from './user.entity';
 import { AuthModule } from '../auth/auth.module';
 import { FindByEmailProvider } from './providers/find-by-email-provider';
 import { UpdateUser } from './providers/update-user.provider';
-import { S3Service } from 'src/uploads/s3.service';
+import { S3Service } from '../uploads/s3.service';
 import { ToggleLikeCharacterProvider } from './providers/toggle-like-character.provider';
-import { Character } from 'src/characters/character.entity';
+import { Character } from '../characters/character.entity';
 import { FetchUserCreatedCharactersProvider } from './providers/fetch-user-created-characters.provider';
-import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { PaginationProvider } from '../common/pagination/providers/pagination.provider';
 import { FetchUserLikedCharactersProvider } from './providers/fetch-user-liked-characters.provider';
 import { GetLikeStatusProvider } from './providers/get-like-status.provider';
 

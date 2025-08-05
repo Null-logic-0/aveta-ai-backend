@@ -8,14 +8,14 @@ import {
   Query,
   Req,
 } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
-import { SubscriptionService } from './subscription.service';
-import { UserPlan } from './enums/userPlan.enum';
 import Stripe from 'stripe';
-import { GetActiveUser } from 'src/auth/decorators/getActiveUser';
-import { ActiveUserData } from 'src/auth/interface/active-user.interface';
-import { AuthType } from 'src/auth/enums/auth-type.enum';
-import { Auth } from 'src/auth/decorators/auth.decorator';
+import { ApiOperation } from '@nestjs/swagger';
+import { UserPlan } from './enums/userPlan.enum';
+import { AuthType } from '../auth/enums/auth-type.enum';
+import { Auth } from '../auth/decorators/auth.decorator';
+import { SubscriptionService } from './subscription.service';
+import { GetActiveUser } from '../auth/decorators/getActiveUser';
+import { ActiveUserData } from '../auth/interface/active-user.interface';
 
 @Controller('subscription')
 export class SubscriptionController {

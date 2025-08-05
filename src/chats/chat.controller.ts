@@ -7,14 +7,14 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { Auth } from 'src/auth/decorators/auth.decorator';
-import { AuthType } from 'src/auth/enums/auth-type.enum';
 import { ChatService } from './chat.service';
-import { CreateChatDto } from './dtos/create-chat.dto';
-import { GetActiveUser } from 'src/auth/decorators/getActiveUser';
-import { ActiveUserData } from 'src/auth/interface/active-user.interface';
 import { ApiOperation } from '@nestjs/swagger';
+import { AuthType } from '../auth/enums/auth-type.enum';
+import { CreateChatDto } from './dtos/create-chat.dto';
+import { Auth } from '../auth/decorators/auth.decorator';
+import { GetActiveUser } from '../auth/decorators/getActiveUser';
 import { UpdateChatThemeDto } from './dtos/update-chat-theme.dto';
+import { ActiveUserData } from '../auth/interface/active-user.interface';
 
 @Controller('chats')
 export class ChatController {

@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { User } from '../../users/user.entity';
 import { Repository } from 'typeorm';
 import { Chat } from '../chat.entity';
+import { User } from '../../users/user.entity';
 import { Character } from '../../characters/character.entity';
 import { CreateChatDto } from '../dtos/create-chat.dto';
 

@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user.entity';
 import { Repository } from 'typeorm';
-import { Character } from 'src/characters/character.entity';
+import { Character } from '../../characters/character.entity';
 
 @Injectable()
 export class GetLikeStatusProvider {

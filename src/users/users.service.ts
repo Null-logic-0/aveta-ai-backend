@@ -5,17 +5,17 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Not, Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
-import { FindByEmailProvider } from './providers/find-by-email-provider';
+import { Not, Repository } from 'typeorm';
 import { Role } from '../auth/enums/role.enum';
+import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUser } from './providers/update-user.provider';
+import { FindByEmailProvider } from './providers/find-by-email-provider';
+import { GetLikeStatusProvider } from './providers/get-like-status.provider';
+import { PaginationQueryDto } from '../common/pagination/dtos/pagination-query.dto';
 import { ToggleLikeCharacterProvider } from './providers/toggle-like-character.provider';
 import { FetchUserCreatedCharactersProvider } from './providers/fetch-user-created-characters.provider';
-import { PaginationQueryDto } from 'src/common/pagination/dtos/pagination-query.dto';
 import { FetchUserLikedCharactersProvider } from './providers/fetch-user-liked-characters.provider';
-import { GetLikeStatusProvider } from './providers/get-like-status.provider';
 
 @Injectable()
 export class UsersService {
@@ -108,7 +108,7 @@ export class UsersService {
       ) {
         throw error;
       }
-      throw new BadRequestException(error || 'Invalid update');
+      throw new BadRequestException(error.message || 'Invalid update');
     }
   }
 
@@ -129,7 +129,7 @@ export class UsersService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new BadRequestException(error || 'Failed to block user!');
+      throw new BadRequestException(error.message || 'Failed to block user!');
     }
   }
 
@@ -158,7 +158,9 @@ export class UsersService {
       if (error instanceof UnauthorizedException) {
         throw error;
       }
-      throw new BadRequestException(error || 'Failed to delete account');
+      throw new BadRequestException(
+        error.message || 'Failed to delete account',
+      );
     }
   }
 
@@ -177,7 +179,7 @@ export class UsersService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new BadRequestException(error || 'Failed to delete user');
+      throw new BadRequestException(error.message || 'Failed to delete user');
     }
   }
 

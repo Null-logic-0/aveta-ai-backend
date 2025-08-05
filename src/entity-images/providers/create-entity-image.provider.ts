@@ -6,9 +6,9 @@ import {
 import { Repository } from 'typeorm';
 import { EntityImage } from '../entity-image.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/users/user.entity';
+import { User } from '../../users/user.entity';
 import { CreateEntityImageDto } from '../dtos/create-entity-image.dto';
-import { S3Service } from 'src/uploads/s3.service';
+import { S3Service } from '../../uploads/s3.service';
 
 @Injectable()
 export class CreateEntityImageProvider {
@@ -55,7 +55,9 @@ export class CreateEntityImageProvider {
         throw error;
       }
 
-      throw new BadRequestException(error || 'Oops... something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops... something went wrong!',
+      );
     }
   }
 }

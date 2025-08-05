@@ -11,7 +11,7 @@ import { SignUpDto } from '../dtos/sign-up.dto';
 import { Role } from '../enums/role.enum';
 import { HashingProvider } from './hashing.provider';
 import { GenerateTokensProvider } from './generate-tokens.provider';
-import { MailService } from 'src/mail/providers/mail.service';
+import { MailService } from '../../mail/providers/mail.service';
 
 @Injectable()
 export class SignUpProvider {
@@ -52,7 +52,7 @@ export class SignUpProvider {
         newUser,
       };
     } catch (error) {
-      throw new BadRequestException(error);
+      throw new BadRequestException(error.message || 'Sign up Failed!');
     }
   }
 }

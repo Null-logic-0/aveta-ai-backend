@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Character } from 'src/characters/character.entity';
+import { Character } from '../../characters/character.entity';
 import { Repository } from 'typeorm';
 import { User } from '../user.entity';
 
@@ -64,7 +64,9 @@ export class ToggleLikeCharacterProvider {
       ) {
         throw error;
       }
-      throw new BadRequestException(error || 'Oops...something went wrong!');
+      throw new BadRequestException(
+        error.message || 'Oops...something went wrong!',
+      );
     }
   }
 }
