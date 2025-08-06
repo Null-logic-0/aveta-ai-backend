@@ -1,4 +1,5 @@
 import { DataSource } from 'typeorm';
+import { PostgresMgration1754477706615 } from './src/migrations/1754477706615-postgres-mgration';
 
 export default new DataSource({
   type: 'postgres',
@@ -8,5 +9,5 @@ export default new DataSource({
   password: '1919',
   database: 'aveta',
   entities: ['**/*.entity.js'],
-  migrations: ['migrations/*.js'],
+  migrations: [PostgresMgration1754477706615],
 });
