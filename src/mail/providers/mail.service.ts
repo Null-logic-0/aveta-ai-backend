@@ -39,7 +39,7 @@ export class MailService {
         context: {
           name: user.userName,
           email: user.email,
-          homeUrl: 'https://aveta.com',
+          homeUrl: 'https://chat.aveta.app',
         },
       });
     } catch (error) {
