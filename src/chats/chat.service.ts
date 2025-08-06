@@ -8,10 +8,10 @@ import { Repository } from 'typeorm';
 import { Chat } from './chat.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateChatDto } from './dtos/create-chat.dto';
+import { UpdateChatThemeDto } from './dtos/update-chat-theme.dto';
 import { CreateChatProvider } from './providers/create-chat.provider';
 import { DeleteChatProvider } from './providers/delete-chat.provider';
 import { UpdateChatThemeProvider } from './providers/update-chat-theme.provider';
-import { UpdateChatThemeDto } from './dtos/update-chat-theme.dto';
 
 @Injectable()
 export class ChatService {
