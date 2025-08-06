@@ -55,7 +55,11 @@ export function appCreate(app: INestApplication): void {
   SwaggerModule.setup('api', app, document);
 
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: [
+      'http://localhost:5173',
+      'https://chat.aveta.app',
+      'https://admin.aveta.app',
+    ],
     credentials: true,
   });
 }
