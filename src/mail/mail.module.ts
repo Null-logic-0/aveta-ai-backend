@@ -12,7 +12,10 @@ import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
     MailerModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
-        const isProd = config.get('appConfig.environment') === 'production';
+        const ENV = process.env.NODE_ENV;
+        console.log(ENV);
+
+        const isProd = ENV === 'production';
         return {
           transport: isProd
             ? {
@@ -33,10 +36,10 @@ import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
                 },
               },
           defaults: {
-            from: `"Aveta AI" <no-reply@aveta.com>`,
+            from: `Aveta AI <no-reply@aveta.com>`,
           },
           template: {
-            dir: join(__dirname, 'templates'),
+            dir: join(__dirname, '..', 'mail', 'templates'),
             adapter: new EjsAdapter(),
             options: { strict: false },
           },

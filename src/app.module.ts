@@ -25,13 +25,14 @@ import { ChatModule } from './chats/chat.module';
 import { EntityImagesModule } from './entity-images/entity-images.module';
 import { PaginationModule } from './common/pagination/pagination.module';
 
-const ENV = process.env.NODE_ENV || 'development';
+const ENV = process.env.NODE_ENV;
+console.log('env', ENV);
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: !ENV ? '.env' : `.env.${ENV}`,
+      envFilePath: ENV === 'production' ? '.env' : `.env.${ENV}`,
       load: [appConfig, databaseConfig],
       validationSchema: enviromentValidation,
     }),

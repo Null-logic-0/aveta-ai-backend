@@ -1,54 +1,57 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as AWS from 'aws-sdk';
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class S3Service {
-  constructor(private readonly configService: ConfigService) {}
+  private s3Client: S3Client;
 
-  private createS3() {
-    return new AWS.S3({
+  constructor(private readonly configService: ConfigService) {
+    this.s3Client = new S3Client({
       region: this.configService.get('appConfig.awsRegion')!,
-      accessKeyId: this.configService.get('appConfig.awsAccessId'),
-      secretAccessKey: this.configService.get('appConfig.awsSecretKey'),
+      credentials: {
+        accessKeyId: this.configService.get('appConfig.awsAccessId')!,
+        secretAccessKey: this.configService.get('appConfig.awsSecretKey')!,
+      },
     });
   }
 
-  private async UploadFileToS3(
+  private async uploadFileToS3(
     folder: string,
     file: Express.Multer.File,
     userId: number,
   ): Promise<string> {
-    const s3 = this.createS3();
-    const region = this.configService.get('appConfig.awsRegion')!;
     const bucket = this.configService.get('appConfig.awsBucketName')!;
     const fileExt = file.originalname.split('.').pop() || 'bin';
     const fileName = `${uuidv4()}.${fileExt}`;
     const key = `${folder}/user-${userId}/${fileName}`;
 
-    await s3
-      .putObject({
-        Bucket: bucket,
-        Key: key,
-        Body: file.buffer,
-        ContentType: file.mimetype,
-      })
-      .promise();
+    const command = new PutObjectCommand({
+      Bucket: bucket,
+      Key: key,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+    });
 
-    return `https://${bucket}.s3.${region}.amazonaws.com/${key}`;
+    await this.s3Client.send(command);
+
+    return `https://${bucket}.s3.${this.configService.get('appConfig.awsRegion')}.amazonaws.com/${key}`;
   }
 
   async deleteObject(key: string): Promise<void> {
-    const s3 = this.createS3();
     const bucket = this.configService.get('appConfig.awsBucketName')!;
 
-    await s3
-      .deleteObject({
-        Bucket: bucket,
-        Key: key,
-      })
-      .promise();
+    const command = new DeleteObjectCommand({
+      Bucket: bucket,
+      Key: key,
+    });
+
+    await this.s3Client.send(command);
   }
 
   async uploadSingleImage(
@@ -56,6 +59,6 @@ export class S3Service {
     file: Express.Multer.File,
     userId: number,
   ): Promise<string> {
-    return await this.UploadFileToS3(folder, file, userId);
+    return this.uploadFileToS3(folder, file, userId);
   }
 }

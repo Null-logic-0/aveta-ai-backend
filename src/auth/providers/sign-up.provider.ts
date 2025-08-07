@@ -45,7 +45,11 @@ export class SignUpProvider {
 
       newUser = await this.usersRepository.save(newUser);
       const tokens = await this.generateTokensProvider.generateToken(newUser);
-      await this.mailService.sendUserWelcome(newUser);
+      try {
+        await this.mailService.sendUserWelcome(newUser);
+      } catch (emailError) {
+        console.error('Failed to send welcome email:', emailError);
+      }
 
       return {
         tokens,

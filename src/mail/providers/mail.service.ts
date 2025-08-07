@@ -1,15 +1,19 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Transporter } from 'nodemailer';
+import { Resend } from 'resend';
 
 import { User } from '../../users/user.entity';
 
 @Injectable()
 export class MailService {
+  private resend: Resend;
+
   private readonly logger = new Logger(MailService.name);
 
   constructor(private mailerService: MailerService) {
     void this.verifyTransporter();
+    this.resend = new Resend(process.env.RESEND_API_KEY);
   }
 
   private async verifyTransporter() {
@@ -30,41 +34,29 @@ export class MailService {
   }
 
   async sendUserWelcome(user: User): Promise<void> {
-    try {
-      await this.mailerService.sendMail({
-        to: user.email,
-        from: `Onboarding Team <no-reply@aveta.com>`,
-        subject: "Thanks for joining Aveta — Here's what's next ",
-        template: './welcome',
-        context: {
-          name: user.userName,
-          email: user.email,
-          homeUrl: 'https://chat.aveta.app',
-        },
-      });
-    } catch (error) {
-      throw new BadRequestException(
-        error.message || 'Failed to send welcome email',
-      );
-    }
+    await this.mailerService.sendMail({
+      to: user.email,
+      from: `Onboarding Team <no-reply@aveta.com>`,
+      subject: "Thanks for joining Aveta — Here's what's next ",
+      template: './welcome',
+      context: {
+        name: user.userName,
+        email: user.email,
+        homeUrl: 'https://chat.aveta.app',
+      },
+    });
   }
 
   async sendPasswordReset(user: User, link: string) {
-    try {
-      await this.mailerService.sendMail({
-        to: user.email,
-        from: `Aveta AI <no-reply@aveta.com>`,
-        subject: 'Reset Your Aveta Password',
-        template: './reset-password',
-        context: {
-          name: user.userName,
-          link,
-        },
-      });
-    } catch (error) {
-      throw new BadRequestException(
-        error.message || 'Failed to send password reset email',
-      );
-    }
+    await this.mailerService.sendMail({
+      to: user.email,
+      from: `Aveta AI <no-reply@aveta.com>`,
+      subject: 'Reset Your Aveta Password',
+      template: './reset-password',
+      context: {
+        name: user.userName,
+        link,
+      },
+    });
   }
 }

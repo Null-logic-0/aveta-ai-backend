@@ -23,6 +23,27 @@ export default Joi.object({
   AWS_REGION: Joi.string().required(),
   AWS_BUCKET_NAME: Joi.string().required(),
 
+  MAIL_HOST: Joi.string().when('NODE_ENV', {
+    is: 'development',
+    then: Joi.required(),
+    otherwise: Joi.optional(),
+  }),
+  MAIL_PORT: Joi.number().when('NODE_ENV', {
+    is: 'development',
+    then: Joi.required(),
+    otherwise: Joi.optional(),
+  }),
+  SMTP_USERNAME: Joi.string().when('NODE_ENV', {
+    is: 'development',
+    then: Joi.required(),
+    otherwise: Joi.optional(),
+  }),
+  SMTP_PASSWORD: Joi.string().when('NODE_ENV', {
+    is: 'development',
+    then: Joi.required(),
+    otherwise: Joi.optional(),
+  }),
+
   RESEND_HOST: Joi.string().when('NODE_ENV', {
     is: 'production',
     then: Joi.required(),
