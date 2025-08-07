@@ -1,19 +1,15 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable, Logger } from '@nestjs/common';
 import { Transporter } from 'nodemailer';
-import { Resend } from 'resend';
 
 import { User } from '../../users/user.entity';
 
 @Injectable()
 export class MailService {
-  private resend: Resend;
-
   private readonly logger = new Logger(MailService.name);
 
   constructor(private mailerService: MailerService) {
     void this.verifyTransporter();
-    this.resend = new Resend(process.env.RESEND_API_KEY);
   }
 
   private async verifyTransporter() {
