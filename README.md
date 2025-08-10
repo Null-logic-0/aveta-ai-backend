@@ -1,98 +1,88 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+Aveta AI Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A scalable and robust backend service for the Aveta AI platform built with NestJS and Node.js. It uses AWS S3 for file storage, EC2 for hosting, and PostgreSQL with TypeORM for database management. File uploads are handled via Multer, and API documentation is powered by Swagger.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+🚀 Features
 
-## Description
+Built with NestJS and Node.js for modular and scalable architecture
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Integration with AWS S3 for secure and efficient file storage
 
-## Project setup
+Hosted on AWS EC2 for reliable cloud infrastructure
 
-```bash
-$ npm install
-```
+Uses PostgreSQL with TypeORM ORM for database operations
 
-## Compile and run the project
+File uploads managed with Multer middleware
 
-```bash
-# development
-$ npm run start
+API documented with Swagger UI for easy testing and exploration
 
-# watch mode
-$ npm run start:dev
+RESTful API design with best practices
 
-# production mode
-$ npm run start:prod
-```
 
-## Run tests
+🛠️ Technology Stack
 
-```bash
-# unit tests
-$ npm run test
+- Node.js
+- Nest.js
+- Mutler
+- AWS S3 bucket
+- AWS EC2
+- TypeORM
+- PostgreSQL
 
-# e2e tests
-$ npm run test:e2e
+📦 Installation & Setup
+Clone the repository:
 
-# test coverage
-$ npm run test:cov
-```
+    git clone https://github.com/Null-logic-0/aveta-ai-backend.git
+    cd aveta-ai-backend
 
-## Deployment
+Install dependencies:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+    npm install
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Configure environment variables:
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+Create a .env file based on .env.example with:
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+PostgreSQL connection details
 
-## Resources
+AWS credentials and S3 bucket info
 
-Check out a few resources that may come in handy when working with NestJS:
+Other relevant configuration such as port and JWT secrets
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Start the development server:
 
-## Support
+    npm run start:dev
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Access the Swagger UI API documentation at:
 
-## Stay in touch
+    http://localhost:3000/api
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+🧪 Running Tests
+Run unit tests with:
 
-## License
+    npm run test
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+📄 License
+
+This project is licensed under the Apache License 2.0. See the LICENSE file for details.
+
+🤝 Contribution
+
+Contributions, issues, and feature requests are welcome! Feel free to fork the project and submit pull requests.
+
+Aveta Backend
+
+https://github.com/Null-logic-0/aveta-ai-backend
+
+Aveta Frontend (app)
+
+https://github.com/Null-logic-0/aveta-frontend
+
+Aveta Frontend (Landing)
+
+https://github.com/Null-logic-0/aveta-landing
+
+Aveta Frontend (Admin)
+
+https://admin.aveta.app/sign-in
+
