@@ -58,6 +58,7 @@ export function appCreate(app: INestApplication): void {
     origin: [
       'http://localhost:5173',
       'https://chat.aveta.app',
+      'https://aveta.app',
       'https://admin.aveta.app',
     ],
     credentials: true,
