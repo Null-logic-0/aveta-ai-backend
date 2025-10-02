@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: aveta-ai-backend
+    env: node
+    plan: starter # Upgrade if memory is still tight
+    region: frankfurt # Change if you prefer a different region
+    buildCommand: NODE_OPTIONS="--max-old-space-size=4096" npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=4096
