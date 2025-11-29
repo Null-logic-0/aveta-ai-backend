@@ -51,6 +51,7 @@ console.log('env', ENV);
         autoLoadEntities: configService.get<boolean>(
           'database.autoLoadEntities',
         ),
+        ssl: { rejectUnauthorized: false },
       }),
     }),
     ConfigModule.forFeature(jwtConfig),
